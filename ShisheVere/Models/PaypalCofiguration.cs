@@ -27,13 +27,15 @@ namespace ShisheVere.Models
             string accessToken = new OAuthTokenCredential(ClientId, ClientSecret, GetConfig()).GetAccessToken();
             return accessToken;
         }
+
         //kjo do ktheje apocontext object
         public static APIContext GetAPIContext()
         {
-            var apiContext = new APIContext(GetAccessToken());
-            apiContext.Config = GetConfig();
+            var apiContext = new APIContext(GetAccessToken())
+            {
+                Config = GetConfig()
+            };
             return apiContext;
         }
-
     }
 }

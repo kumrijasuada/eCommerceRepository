@@ -165,129 +165,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Kategoriviewmodel\Kategorite.cs" />
-    <Compile Include="Migrations\201809021901228_InitialCreate.cs" />
-    <Compile Include="Migrations\201809021901228_InitialCreate.Designer.cs">
-      <DependentUpon>201809021901228_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809021957030_first migration.cs" />
-    <Compile Include="Migrations\201809021957030_first migration.Designer.cs">
-      <DependentUpon>201809021957030_first migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809022109293_Roli is required.cs" />
-    <Compile Include="Migrations\201809022109293_Roli is required.Designer.cs">
-      <DependentUpon>201809022109293_Roli is required.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809030953142_ShtoTbl ShoppingCart.cs" />
-    <Compile Include="Migrations\201809030953142_ShtoTbl ShoppingCart.Designer.cs">
-      <DependentUpon>201809030953142_ShtoTbl ShoppingCart.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809060858256_review.cs" />
-    <Compile Include="Migrations\201809060858256_review.Designer.cs">
-      <DependentUpon>201809060858256_review.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809060940233_columnn shishe.cs" />
-    <Compile Include="Migrations\201809060940233_columnn shishe.Designer.cs">
-      <DependentUpon>201809060940233_columnn shishe.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809070714072_shishetbl.cs" />
-    <Compile Include="Migrations\201809070714072_shishetbl.Designer.cs">
-      <DependentUpon>201809070714072_shishetbl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809070716098_shishetbl1.cs" />
-    <Compile Include="Migrations\201809070716098_shishetbl1.Designer.cs">
-      <DependentUpon>201809070716098_shishetbl1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809110853168_add tblOrders.cs" />
-    <Compile Include="Migrations\201809110853168_add tblOrders.Designer.cs">
-      <DependentUpon>201809110853168_add tblOrders.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809120700112_columnrequired.cs" />
-    <Compile Include="Migrations\201809120700112_columnrequired.Designer.cs">
-      <DependentUpon>201809120700112_columnrequired.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809120705449_delete required constrain.cs" />
-    <Compile Include="Migrations\201809120705449_delete required constrain.Designer.cs">
-      <DependentUpon>201809120705449_delete required constrain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809120710346_add tbl shopCart.cs" />
-    <Compile Include="Migrations\201809120710346_add tbl shopCart.Designer.cs">
-      <DependentUpon>201809120710346_add tbl shopCart.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809120835244_add column telefoni.cs" />
-    <Compile Include="Migrations\201809120835244_add column telefoni.Designer.cs">
-      <DependentUpon>201809120835244_add column telefoni.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809120917584_change col bleres to username.cs" />
-    <Compile Include="Migrations\201809120917584_change col bleres to username.Designer.cs">
-      <DependentUpon>201809120917584_change col bleres to username.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809151200183_add tbl kerkesat.cs" />
-    <Compile Include="Migrations\201809151200183_add tbl kerkesat.Designer.cs">
-      <DependentUpon>201809151200183_add tbl kerkesat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809191343396_add tbl status.cs" />
-    <Compile Include="Migrations\201809191343396_add tbl status.Designer.cs">
-      <DependentUpon>201809191343396_add tbl status.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809200707187_new.cs" />
-    <Compile Include="Migrations\201809200707187_new.Designer.cs">
-      <DependentUpon>201809200707187_new.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809200853085_delete constrain required.cs" />
-    <Compile Include="Migrations\201809200853085_delete constrain required.Designer.cs">
-      <DependentUpon>201809200853085_delete constrain required.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809200948453_delete auto inc.cs" />
-    <Compile Include="Migrations\201809200948453_delete auto inc.Designer.cs">
-      <DependentUpon>201809200948453_delete auto inc.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809201013232_tdsg.cs" />
-    <Compile Include="Migrations\201809201013232_tdsg.Designer.cs">
-      <DependentUpon>201809201013232_tdsg.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809242024147_add clm foto to shopcart.cs" />
-    <Compile Include="Migrations\201809242024147_add clm foto to shopcart.Designer.cs">
-      <DependentUpon>201809242024147_add clm foto to shopcart.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809242110420_string foto.cs" />
-    <Compile Include="Migrations\201809242110420_string foto.Designer.cs">
-      <DependentUpon>201809242110420_string foto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809270950093_add new tbl notification.cs" />
-    <Compile Include="Migrations\201809270950093_add new tbl notification.Designer.cs">
-      <DependentUpon>201809270950093_add new tbl notification.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809271010386_add clm status.cs" />
-    <Compile Include="Migrations\201809271010386_add clm status.Designer.cs">
-      <DependentUpon>201809271010386_add clm status.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809271150282_add column id shishe.cs" />
-    <Compile Include="Migrations\201809271150282_add column id shishe.Designer.cs">
-      <DependentUpon>201809271150282_add column id shishe.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809271159315_change cln name to id prodhues.cs" />
-    <Compile Include="Migrations\201809271159315_change cln name to id prodhues.Designer.cs">
-      <DependentUpon>201809271159315_change cln name to id prodhues.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201809271235131_change clm nam.cs" />
-    <Compile Include="Migrations\201809271235131_change clm nam.Designer.cs">
-      <DependentUpon>201809271235131_change clm nam.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810170711408_add clm price.cs" />
-    <Compile Include="Migrations\201810170711408_add clm price.Designer.cs">
-      <DependentUpon>201810170711408_add clm price.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810180851488_make kategori reqiured.cs" />
-    <Compile Include="Migrations\201810180851488_make kategori reqiured.Designer.cs">
-      <DependentUpon>201810180851488_make kategori reqiured.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810180923598_price.cs" />
-    <Compile Include="Migrations\201810180923598_price.Designer.cs">
-      <DependentUpon>201810180923598_price.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810190748268_delete constrain email.cs" />
-    <Compile Include="Migrations\201810190748268_delete constrain email.Designer.cs">
-      <DependentUpon>201810190748268_delete constrain email.cs</DependentUpon>
+    <Compile Include="Migrations\202301161734074_Initial.cs" />
+    <Compile Include="Migrations\202301161734074_Initial.Designer.cs">
+      <DependentUpon>202301161734074_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Foto.cs" />
@@ -3493,105 +3373,15 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201809021901228_InitialCreate.resx">
-      <DependentUpon>201809021901228_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809021957030_first migration.resx">
-      <DependentUpon>201809021957030_first migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809022109293_Roli is required.resx">
-      <DependentUpon>201809022109293_Roli is required.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809030953142_ShtoTbl ShoppingCart.resx">
-      <DependentUpon>201809030953142_ShtoTbl ShoppingCart.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809060858256_review.resx">
-      <DependentUpon>201809060858256_review.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809060940233_columnn shishe.resx">
-      <DependentUpon>201809060940233_columnn shishe.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809070714072_shishetbl.resx">
-      <DependentUpon>201809070714072_shishetbl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809070716098_shishetbl1.resx">
-      <DependentUpon>201809070716098_shishetbl1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809110853168_add tblOrders.resx">
-      <DependentUpon>201809110853168_add tblOrders.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809120700112_columnrequired.resx">
-      <DependentUpon>201809120700112_columnrequired.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809120705449_delete required constrain.resx">
-      <DependentUpon>201809120705449_delete required constrain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809120710346_add tbl shopCart.resx">
-      <DependentUpon>201809120710346_add tbl shopCart.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809120835244_add column telefoni.resx">
-      <DependentUpon>201809120835244_add column telefoni.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809120917584_change col bleres to username.resx">
-      <DependentUpon>201809120917584_change col bleres to username.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809151200183_add tbl kerkesat.resx">
-      <DependentUpon>201809151200183_add tbl kerkesat.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809191343396_add tbl status.resx">
-      <DependentUpon>201809191343396_add tbl status.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809200707187_new.resx">
-      <DependentUpon>201809200707187_new.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809200853085_delete constrain required.resx">
-      <DependentUpon>201809200853085_delete constrain required.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809200948453_delete auto inc.resx">
-      <DependentUpon>201809200948453_delete auto inc.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809201013232_tdsg.resx">
-      <DependentUpon>201809201013232_tdsg.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809242024147_add clm foto to shopcart.resx">
-      <DependentUpon>201809242024147_add clm foto to shopcart.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809242110420_string foto.resx">
-      <DependentUpon>201809242110420_string foto.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809270950093_add new tbl notification.resx">
-      <DependentUpon>201809270950093_add new tbl notification.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809271010386_add clm status.resx">
-      <DependentUpon>201809271010386_add clm status.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809271150282_add column id shishe.resx">
-      <DependentUpon>201809271150282_add column id shishe.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809271159315_change cln name to id prodhues.resx">
-      <DependentUpon>201809271159315_change cln name to id prodhues.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809271235131_change clm nam.resx">
-      <DependentUpon>201809271235131_change clm nam.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810170711408_add clm price.resx">
-      <DependentUpon>201810170711408_add clm price.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810180851488_make kategori reqiured.resx">
-      <DependentUpon>201810180851488_make kategori reqiured.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810180923598_price.resx">
-      <DependentUpon>201810180923598_price.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810190748268_delete constrain email.resx">
-      <DependentUpon>201810190748268_delete constrain email.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202301161734074_Initial.resx">
+      <DependentUpon>202301161734074_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

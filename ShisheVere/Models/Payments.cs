@@ -14,6 +14,5 @@ namespace ShisheVere.Models
         public int SasiaPorosi { get; set; }
         public string EmriShishe { get; set; }
         public string EmailBleres { get; set; }
-
     }
 }

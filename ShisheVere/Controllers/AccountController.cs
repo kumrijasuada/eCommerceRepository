@@ -8,6 +8,7 @@ using ShisheVere.DBCONTEXT;
 using System.Text;
 using ShisheVere.ViewModels;
 using System.Net.Mail;
+using System.Security.Cryptography;
 
 namespace ShisheVere.Controllers
 {
@@ -90,24 +91,41 @@ namespace ShisheVere.Controllers
                 if (!ModelState.IsValid)
                     return View(entity);
 
+                var dbUser = db.Perdorues.Where(s =>
+                s.Username.Equals(entity.Username.Trim())).FirstOrDefault();
 
-                var userInfo = db.Perdorues.Where(s => s.Username.Equals(entity.Username.Trim()) && s.Password.Equals(entity.Password.Trim())).FirstOrDefault();
-
-                if (userInfo != null)
+                bool isCorrectPassword = false;
+                if (dbUser != null)
                 {
+                    byte[] salt = new byte[32];
+                    salt = dbUser.Salt;
+                    byte[] password = new byte[32];
+                    password = dbUser.Password;
 
+                    int iterations = 10000;
+                    using (Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(entity.Password, salt, iterations))
+                    {
+                        byte[] derivedKey = pbkdf2.GetBytes(32);
+                        if (derivedKey.SequenceEqual(password))
+                        {
+                            isCorrectPassword = true;
+                        }
+                    }
+                }
 
+                if (isCorrectPassword)
+                {
                     SignInRemember(entity.Username, entity.isRemember);
 
-                    Session["UserName"] = userInfo.Username;
-                    Session["roli"] = userInfo.Roli;
+                    Session["UserName"] = dbUser.Username;
+                    Session["roli"] = dbUser.Roli;
 
-                    if(string.IsNullOrEmpty(entity.ReturnURL))
+                    if (string.IsNullOrEmpty(entity.ReturnURL))
                     {
-                        if (userInfo.Roli == "admin")
-                            return RedirectToAction("Index","Admin");
-                        else if(userInfo.Roli=="prodhues")
-                           return  RedirectToAction("Index", "Prodhues");
+                        if (dbUser.Roli == "admin")
+                            return RedirectToAction("Index", "Admin");
+                        else if (dbUser.Roli == "prodhues")
+                            return RedirectToAction("Index", "Prodhues");
                         else return RedirectToAction("Index", "Home");
 
                     }
@@ -121,28 +139,7 @@ namespace ShisheVere.Controllers
                     return View(entity);
                 }
             }
-
         }
-
-        /*  public static string EnkriptoPasswordBase64(string password)
-         {
-         byte[] bytes = Encoding.Unicode.GetBytes(password);
-         byte[] inArray = HashAlgorithm.Create("SHA1").ComputeHash(bytes);
-         return Convert.ToBase64String(inArray);
-         }
-
-
-         /*public static bool krahaso(string password, string HASHValue)
-         {
-
-                 string expectedHashString = EnkriptoPasswordBase64(password);
-
-              if (HASHValue == expectedHashString)
-                    return true;
-              else
-                   return false;
-
-         }*/
 
         [HttpGet]
         public ActionResult Registration()
@@ -154,72 +151,94 @@ namespace ShisheVere.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Registration(RegistrationView registrationView)
         {
-              if (string.IsNullOrEmpty(registrationView.Roli) || string.IsNullOrEmpty(registrationView.Password) || string.IsNullOrEmpty(registrationView.Adresa) || string.IsNullOrEmpty(registrationView.Telefon) || string.IsNullOrEmpty(registrationView.Username) || string.IsNullOrEmpty(registrationView.Password) || string.IsNullOrEmpty(registrationView.Emer) || string.IsNullOrEmpty(registrationView.Mbiemer) || string.IsNullOrEmpty(registrationView.Email) || string.IsNullOrEmpty(registrationView.ConfirmPassword))
+            if (string.IsNullOrEmpty(registrationView.Roli) || string.IsNullOrEmpty(registrationView.Password) || string.IsNullOrEmpty(registrationView.Adresa) || string.IsNullOrEmpty(registrationView.Telefon) || string.IsNullOrEmpty(registrationView.Username) || string.IsNullOrEmpty(registrationView.Password) || string.IsNullOrEmpty(registrationView.Emer) || string.IsNullOrEmpty(registrationView.Mbiemer) || string.IsNullOrEmpty(registrationView.Email) || string.IsNullOrEmpty(registrationView.ConfirmPassword))
+            {
+                TempData["ErrorReg"] = "Please fill the fields !";
+                return View(registrationView);
+            }
+
+            else
+            {
+                StoreContext db = new StoreContext();
+
+                int count1 = (from u in db.Perdorues
+                              where string.Compare(registrationView.Username, u.Username) == 0
+                              select u.Username).Count();
+                if (count1 > 0)
                 {
-                    TempData["ErrorReg"] = "Please fill the fields !";
+                    TempData["username"] = "- Sorry: Username already Exists ! Choose another Username !";
                     return View(registrationView);
                 }
 
-                else
+                int count2 = (from u in db.Perdorues
+                              where string.Compare(registrationView.Email, u.Email) == 0
+                              select u.Username).Count();
+
+                if (count2 > 0)
                 {
-                    StoreContext db = new StoreContext();
+                    TempData["email"] = "- Sorry:Email already Exists ! Choose another Email !";
+                    return View(registrationView);
+                }
 
-                    int count1 = (from u in db.Perdorues
-                                  where string.Compare(registrationView.Username, u.Username) == 0
-                                  select u.Username).Count();
-                    if (count1 > 0)
+                //Save User Data   
+                using (StoreContext dbContext = new StoreContext())
+                {
+                    Tuple<byte[], byte[]> passwordAndSalt = PasswordHashing(registrationView.Password);
+
+                    var user = new Perdorues()
                     {
-                        TempData["username"] = "- Sorry: Username already Exists ! Choose another Username !";
-                        return View(registrationView);
-                    }
+                        Username = registrationView.Username,
+                        Emer = registrationView.Emer,
+                        Mbiemer = registrationView.Mbiemer,
+                        Email = registrationView.Email,
+                        Password = passwordAndSalt.Item1,
+                        Salt = passwordAndSalt.Item2,
+                        Telefon = registrationView.Telefon,
+                        Status = "aktiv",
+                        Roli = registrationView.Roli,
+                        Adrese = registrationView.Adresa
+                    };
 
-                    int count2 = (from u in db.Perdorues
-                                  where string.Compare(registrationView.Email, u.Email) == 0
-                                  select u.Username).Count();
-
-                    if (count2 > 0)
+                    dbContext.Perdorues.Add(user);
+                    dbContext.SaveChanges();
+                    if (registrationView.Roli == "prodhues")
                     {
-                        TempData["email"] = "- Sorry:Email already Exists ! Choose another Email !";
-                        return View(registrationView);
-                    }
-
-                    //Save User Data   
-                    using (StoreContext dbContext = new StoreContext())
-                    {
-                        var user = new Perdorues()
+                        var prodhues = new Prodhues()
                         {
-                            Username = registrationView.Username,
-                            Emer = registrationView.Emer,
-                            Mbiemer = registrationView.Mbiemer,
+                            Emertim = registrationView.Username,
                             Email = registrationView.Email,
-                            Password = registrationView.Password,
                             Telefon = registrationView.Telefon,
                             Status = "aktiv",
-                            Roli = registrationView.Roli,
                             Adrese = registrationView.Adresa
                         };
 
-                        dbContext.Perdorues.Add(user);
+                        dbContext.Prodhues.Add(prodhues);
                         dbContext.SaveChanges();
-                        if (registrationView.Roli == "prodhues")
-                        {
-                            var prodhues = new Prodhues()
-                            {
-                                Emertim = registrationView.Username,
-                                Email = registrationView.Email,
-                                Telefon = registrationView.Telefon,
-                                Status = "aktiv",
-                                Adrese = registrationView.Adresa
-                            };
-
-                            dbContext.Prodhues.Add(prodhues);
-                            dbContext.SaveChanges();
-                        }
-                        return View("Login");
                     }
-                  
+                    return View("Login");
                 }
+
             }
+        }
+
+        // PBKDF2 algorithm (Password-Based Key Derivation Function 2)
+        private Tuple<byte[], byte[]> PasswordHashing(string password)
+        {
+            byte[] bytePassword;
+
+            byte[] randomSalt = new byte[32];
+            using (var x = new RNGCryptoServiceProvider())
+            {
+                x.GetBytes(randomSalt);
+            }
+            int iterations = 10000;
+            using (Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, randomSalt, iterations))
+            {
+                byte[] derivedKey = pbkdf2.GetBytes(32);
+                bytePassword = derivedKey; 
+            }
+            return Tuple.Create(bytePassword, randomSalt);
+        }
 
         public string GetUserNameByEmail(string email)
         {
@@ -245,7 +264,8 @@ namespace ShisheVere.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult LostPassword(FormCollection model)
-        { StoreContext db = new StoreContext();
+        {
+            StoreContext db = new StoreContext();
             string txt = Guid.NewGuid().ToString();
             if (model != null)
             {
@@ -324,55 +344,58 @@ namespace ShisheVere.Controllers
                            where string.Compare(idKerkese, u.kerkesaId) == 0
                            select u.kerkesaId).FirstOrDefault();
             if (string.IsNullOrEmpty(gjej))
-            return RedirectToAction("Index", "NotFound");
+                return RedirectToAction("Index", "NotFound");
             else return View();
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ResetPassword(FormCollection perdorues, string id)
-        {
-            StoreContext db = new StoreContext();
-            string idKerkese = Request.QueryString["id"];
-            string gjej = (from u in db.Kerkesat
-                           where string.Compare(idKerkese, u.kerkesaId) == 0
-                           select u.kerkesaId).FirstOrDefault();
-            if (!string.IsNullOrEmpty(gjej))
-            {
-                string Username = perdorues["username"].ToString();
-                string Pass1 = perdorues["pass1"].ToString();
-                string Confpass1 = perdorues["confpass1"].ToString();
 
-                if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Pass1) || string.IsNullOrEmpty(Confpass1))
-                {
-                    TempData["sukses"] = "Ju lutemi plotesoni te gjitha fushat!";
-                    return View("ResetPassword");
+        // ToDo
 
-                }
-                else if (Pass1 != Confpass1)
-                {
-                    TempData["sukses"] = "Ju lutemi sigurohuni qe passwordi i ri te jete i njejte me passwordin e konfirmuar!";
-                    return View("ResetPassword");
-                }
-                else
-                {
-                    var userInfo = db.Perdorues.Where(s => s.Username.Equals(Username.Trim())).FirstOrDefault();
-                    if (userInfo != null)
-                    {
-                        userInfo.Password = Pass1;
-                        db.SaveChanges();
-                        TempData["sukses"] = "Passwordi u ndryshua me sukses!";
-                        return View("ResetPassword");
-                    }
-                    else
-                    {
-                        TempData["sukses"] = "Nje llogari e tille nuk ekziston";
-                        return View("ResetPassword");
-                    }
-                }
-            }
-            else return RedirectToAction("Index", "NotFound");
-        }
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult ResetPassword(FormCollection perdorues, string id)
+        //{
+        //    StoreContext db = new StoreContext();
+        //    string idKerkese = Request.QueryString["id"];
+        //    string gjej = (from u in db.Kerkesat
+        //                   where string.Compare(idKerkese, u.kerkesaId) == 0
+        //                   select u.kerkesaId).FirstOrDefault();
+        //    if (!string.IsNullOrEmpty(gjej))
+        //    {
+        //        string Username = perdorues["username"].ToString();
+        //        string Pass1 = perdorues["pass1"].ToString();
+        //        string Confpass1 = perdorues["confpass1"].ToString();
+
+        //        if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Pass1) || string.IsNullOrEmpty(Confpass1))
+        //        {
+        //            TempData["sukses"] = "Ju lutemi plotesoni te gjitha fushat!";
+        //            return View("ResetPassword");
+
+        //        }
+        //        else if (Pass1 != Confpass1)
+        //        {
+        //            TempData["sukses"] = "Ju lutemi sigurohuni qe passwordi i ri te jete i njejte me passwordin e konfirmuar!";
+        //            return View("ResetPassword");
+        //        }
+        //        else
+        //        {
+        //            var userInfo = db.Perdorues.Where(s => s.Username.Equals(Username.Trim())).FirstOrDefault();
+        //            if (userInfo != null)
+        //            {
+        //                userInfo.Password = Pass1;
+        //                db.SaveChanges();
+        //                TempData["sukses"] = "Passwordi u ndryshua me sukses!";
+        //                return View("ResetPassword");
+        //            }
+        //            else
+        //            {
+        //                TempData["sukses"] = "Nje llogari e tille nuk ekziston";
+        //                return View("ResetPassword");
+        //            }
+        //        }
+        //    }
+        //    else return RedirectToAction("Index", "NotFound");
+        //}
     }
 }

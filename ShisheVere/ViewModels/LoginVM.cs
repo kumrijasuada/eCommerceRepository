@@ -1,14 +1,10 @@
 ﻿using ShisheVere.DBCONTEXT;
 using ShisheVere.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 
 namespace ShisheVere.ViewModels
 {
-    
     public class LoginVM
     {
         public string Username { get; set; }
@@ -30,8 +26,6 @@ namespace ShisheVere.ViewModels
 
     public class RegistrationView
     {
-   
-
         [Required(ErrorMessage = "Emer required")]
         [Display(Name = "Emer")]
         public string Emer { get; set; }
@@ -47,7 +41,7 @@ namespace ShisheVere.ViewModels
 
         [Required(ErrorMessage = "Phone Number required")]
         public string Telefon { get; set; }
-        [Required(ErrorMessage ="Choose Role")]
+        [Required(ErrorMessage = "Choose Role")]
         public string Roli { get; set; }
         [Required(ErrorMessage = "Adresa required")]
         public string Adresa { get; set; }
@@ -66,6 +60,5 @@ namespace ShisheVere.ViewModels
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "Error : Confirm password does not match with password")]
         public string ConfirmPassword { get; set; }
-
     }
 }
