@@ -5,20 +5,13 @@ using ShisheVere.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Data;
 using System.Data.Entity;
-using System.Net;
-using System.Web.Helpers;
-using System.Data.Entity.Infrastructure;
 using System.Web.UI.WebControls;
-using System.IO;
-using ShisheVere.Security;
 using PagedList;
 
 namespace AppShisheVere.Controllers
-
 {
 
     public class HomeController : Controller
@@ -66,9 +59,7 @@ namespace AppShisheVere.Controllers
             }
             return View(shishe);
         }
-
         
-
         [HttpPost]
         public JsonResult JsonFoto()
         {
@@ -87,7 +78,6 @@ namespace AppShisheVere.Controllers
 
             return Json(foto, JsonRequestBehavior.AllowGet);
         }
-
 
         [HttpPost]
         public JsonResult JsonSearch(string search)
@@ -108,8 +98,6 @@ namespace AppShisheVere.Controllers
 
             return Json(foto, JsonRequestBehavior.AllowGet);
         }
-
-
 
         [HttpPost]
         public JsonResult Jsonkategori()

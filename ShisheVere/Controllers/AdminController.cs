@@ -1,22 +1,10 @@
 ﻿using ShisheVere.DBCONTEXT;
-using ShisheVere.Kategoriviewmodel;
-using ShisheVere.Models;
 using ShisheVere.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Data;
 using System.Data.Entity;
-using System.Net;
-using System.Web.Helpers;
-using System.Data.Entity.Infrastructure;
 using System.Web.UI.WebControls;
-using System.IO;
-using ShisheVere.Security;
-
-
 
 namespace ShisheVere.Controllers
 {
@@ -46,7 +34,5 @@ namespace ShisheVere.Controllers
             ViewBag.Id = db.Perdorues.Where(p => p.Roli == "admin").Select(p => p.Id_perdorues).FirstOrDefault();
             return View(adm);
         }  
-
-
     }
 }

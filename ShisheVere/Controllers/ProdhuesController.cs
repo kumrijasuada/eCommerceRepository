@@ -10,13 +10,11 @@ using ShisheVere.DBCONTEXT;
 using ShisheVere.Models;
 using ShisheVere.Security;
 using System.IO;
-using PagedList;
 
 namespace ShisheVere.Controllers
 {
     public class ProdhuesController : Controller
     {
-
         private StoreContext db = new StoreContext();
 
         [CostumAuthorize(Roles = "prodhues")]
@@ -50,7 +48,6 @@ namespace ShisheVere.Controllers
             //                   };
             return View();
         }
-
 
         [CostumAuthorize(Roles = "prodhues")]
         public JsonResult Transaksione1(string search)
@@ -143,7 +140,6 @@ namespace ShisheVere.Controllers
             return PartialView("_View", model);
         }
 
-
         public ActionResult Afisho1(int id)
         {
             Shishe model = new Shishe();
@@ -160,7 +156,6 @@ namespace ShisheVere.Controllers
             }
             return PartialView("View1", model);
         }
-
 
         [CostumAuthorize(Roles = "prodhues")]
         [HttpPost]
@@ -210,8 +205,6 @@ namespace ShisheVere.Controllers
             return RedirectToAction("Index");
 
         }
-
-
 
         // GET: Prodhues/Details/5
         public ActionResult Details(int? id)

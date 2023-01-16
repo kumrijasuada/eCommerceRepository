@@ -4,16 +4,11 @@ using ShisheVere.Security;
 using ShisheVere.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using PayPal.Api;
-using System.Text;
-using System.IO;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
@@ -22,7 +17,6 @@ namespace ShisheVere.Controllers
 {
     public class ShoppingCartController : Controller
     {
-     
         private StoreContext db = new StoreContext();
 
         // GET: ShoppingCart
@@ -83,10 +77,6 @@ namespace ShisheVere.Controllers
             return Json(shop, JsonRequestBehavior.AllowGet);
         }
 
-
-
-
-
         [CostumAuthorize(Roles = "user")]
         public ActionResult Edit(int? id)
         {
@@ -101,10 +91,6 @@ namespace ShisheVere.Controllers
             }
             return View(shop);
         }
-
-        
-
-
 
         [CostumAuthorize(Roles = "user")]
         // POST: Prodhues/Edit/5
@@ -121,12 +107,10 @@ namespace ShisheVere.Controllers
             return RedirectToAction("myshoppingcart");
         }
 
-
         [CostumAuthorize(Roles = "user")]
         [HttpPost]
         public JsonResult Update(ShopModel shop)
         {
-
             ShoppingCart sh = db.ShoppingCart.Where(p => p.id == shop.id).FirstOrDefault();
             sh.Sasia = shop.Sasia;
             db.SaveChanges();
@@ -169,7 +153,6 @@ namespace ShisheVere.Controllers
             return Json(null, JsonRequestBehavior.AllowGet);
         }
 
-
         [CostumAuthorize(Roles = "user")]
         public ActionResult Delete(int? id)
         {
@@ -183,8 +166,6 @@ namespace ShisheVere.Controllers
             return PartialView("DeleteShop", model);
         }
 
-
-
         [CostumAuthorize(Roles = "user")]
         // POST: Prodhues/Delete/5
         [HttpPost]
@@ -196,7 +177,6 @@ namespace ShisheVere.Controllers
             db.SaveChanges();
             return RedirectToAction("myshoppingcart");
         }
-
 
         public ActionResult Order(int? id)
         {
@@ -537,8 +517,6 @@ namespace ShisheVere.Controllers
                 return (responseString == "VERIFIED");
             }
         }
-
-    
 
     }
 }

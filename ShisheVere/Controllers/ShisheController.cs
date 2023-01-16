@@ -8,8 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using ShisheVere.DBCONTEXT;
 using ShisheVere.Models;
-using System.Web.Helpers;
-using System.Data.Entity.Infrastructure;
 using System.Web.UI.WebControls;
 using System.IO;
 using ShisheVere.Security;
@@ -155,7 +153,7 @@ namespace AppShisheVere.Controllers
             }
             if (file != null)
             {
-                var f = db.Foto.Where(p=>p.Id_shishe==shishe.Id_shishe).FirstOrDefault();
+                var f = db.Foto.Where(p => p.Id_shishe == shishe.Id_shishe).FirstOrDefault();
                 Foto foto = new Foto();
                 var allowedExtensions = new[] { ".jpg", ".png", ".jpg", "jpeg" };
                 foto.Status = "aktiv";
@@ -183,12 +181,10 @@ namespace AppShisheVere.Controllers
                 }
             }
             ViewBag.id_kategori = new SelectList(db.Kategori, "Id_kategori", "Emertim", shishe.id_kategori);
-            ViewBag.id_prodhues = new SelectList(db.Prodhues, "Id_prodhues", "Emertim", shishe.id_prodhues);           
+            ViewBag.id_prodhues = new SelectList(db.Prodhues, "Id_prodhues", "Emertim", shishe.id_prodhues);
             return View();
         }
 
-
-        
         public ActionResult Delete(int id)
         {
             Shishe model = new Shishe();
@@ -200,7 +196,6 @@ namespace AppShisheVere.Controllers
             return PartialView("DeleteShishe", model);
         }
 
-      
         // POST: Kategori/Delete/5
         [HttpPost]
         public ActionResult DeleteConfirmed(int id)
@@ -211,18 +206,15 @@ namespace AppShisheVere.Controllers
             return RedirectToAction("Index", "Prodhues");
         }
 
-
-
         [HttpPost]
-      public JsonResult Update (ShisheModel shishe)
+        public JsonResult Update(ShisheModel shishe)
         {
             db.Configuration.ProxyCreationEnabled = false;
             Shishe sh = db.Shishe.Where(p => p.Id_shishe == shishe.Id).FirstOrDefault();
             sh.status = shishe.Status;
-            db.SaveChanges();           
+            db.SaveChanges();
             return Json(sh, JsonRequestBehavior.AllowGet);
         }
-
 
         protected override void Dispose(bool disposing)
         {
@@ -232,7 +224,6 @@ namespace AppShisheVere.Controllers
             }
             base.Dispose(disposing);
         }
-
 
     }
 }

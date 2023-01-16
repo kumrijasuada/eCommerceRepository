@@ -1,14 +1,11 @@
 ﻿using ShisheVere.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Security.Principal;
 using ShisheVere.DBCONTEXT;
 using System.Text;
-using System.Security.Cryptography;
 using ShisheVere.ViewModels;
 using System.Net.Mail;
 
@@ -16,7 +13,6 @@ namespace ShisheVere.Controllers
 {
     public class AccountController : Controller
     {
-
         [HttpGet]
         public ActionResult Login(string returnURL)
         {
@@ -25,8 +21,8 @@ namespace ShisheVere.Controllers
             EnsureLoggedOut();
             // Store the originating URL so we can attach it to a form field
             userinfo.ReturnURL = returnURL;
-            return View(userinfo);
 
+            return View(userinfo);
         }
 
         //GET: EnsureLoggedOut
@@ -65,7 +61,6 @@ namespace ShisheVere.Controllers
             FormsAuthentication.SetAuthCookie(userName, isPersistent);
         }
 
-
         //GET: RedirectToLocal
         private ActionResult RedirectToLocal(string returnURL = "")
         {
@@ -89,7 +84,6 @@ namespace ShisheVere.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginVM entity)
         {
-
             using (StoreContext db = new StoreContext())
             {
                 // Ensure we have a valid viewModel to work with
@@ -129,8 +123,6 @@ namespace ShisheVere.Controllers
             }
 
         }
-
-
 
         /*  public static string EnkriptoPasswordBase64(string password)
          {
@@ -228,9 +220,6 @@ namespace ShisheVere.Controllers
                   
                 }
             }
-        
-
-
 
         public string GetUserNameByEmail(string email)
         {
@@ -250,7 +239,6 @@ namespace ShisheVere.Controllers
         {
             return View();
         }
-
 
         // POST: Account/LostPassword
         [HttpPost]
@@ -327,7 +315,6 @@ namespace ShisheVere.Controllers
 
         }
 
-
         [AllowAnonymous]
         public ActionResult ResetPassword()
         {
@@ -340,7 +327,6 @@ namespace ShisheVere.Controllers
             return RedirectToAction("Index", "NotFound");
             else return View();
         }
-
 
         [HttpPost]
         [AllowAnonymous]
@@ -388,6 +374,5 @@ namespace ShisheVere.Controllers
             }
             else return RedirectToAction("Index", "NotFound");
         }
-        
     }
 }

@@ -1,9 +1,6 @@
 ﻿using ShisheVere.DBCONTEXT;
 using ShisheVere.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ShisheVere.Controllers
@@ -16,7 +13,6 @@ namespace ShisheVere.Controllers
         {
             return View();
         }
-
 
         [HttpPost]
         public JsonResult Update(int id)

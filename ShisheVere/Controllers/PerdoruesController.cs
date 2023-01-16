@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using ShisheVere.DBCONTEXT;
 using ShisheVere.Models;
-using ShisheVere.Security;
 
 namespace ShisheVere.Controllers
 {
@@ -58,7 +54,6 @@ namespace ShisheVere.Controllers
             }
             return PartialView("PerdoruesEdit", model);
         }
-
 
         // POST: Perdorues/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -111,7 +106,6 @@ namespace ShisheVere.Controllers
                 return View(model);
         }
 
-       
         // POST: Perdorues/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -161,7 +155,6 @@ namespace ShisheVere.Controllers
             return RedirectToAction("Index","Admin");
         }
 
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -170,6 +163,5 @@ namespace ShisheVere.Controllers
             }
             base.Dispose(disposing);
         }
-
     }
 }
