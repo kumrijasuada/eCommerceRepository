@@ -1,0 +1,21 @@
+﻿@model ShisheVere.Models.ShoppingCart
+
+
+<div class="modal-header">
+    <h3 class="modal-title" id="exampleModalCenterTitle">Delete</h3>
+</div>
+
+@using (Html.BeginForm("DeleteConfirmed", "ShoppingCart", new { id = Model.id}))
+{
+
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <strong>ARE YOU SURE YOU WANT TO DELETE THIS?</strong><br />
+        <div style="margin-left:70px;">
+            <input type="submit" class="btn btn-secondary" value="Yes"> &nbsp;&nbsp;
+            <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+        </div>
+    </div>
+}
+
+

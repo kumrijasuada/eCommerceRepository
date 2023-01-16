@@ -1,0 +1,82 @@
+﻿@model ShisheVere.Models.Shishe
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detajet</h2>
+
+<div>
+ 
+        <table class="table">
+
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.KATEGORI.Emertim)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.KATEGORI.Emertim)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Prodhues.Emertim)
+                </th>
+
+                <td>
+                    @Html.DisplayFor(model => model.Prodhues.Emertim)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Emertim)
+                </th>
+
+                <td>
+                    @Html.DisplayFor(model => model.Emertim)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Kapacitet)
+                </th>
+
+                <td>
+                    @Html.DisplayFor(model => model.Kapacitet)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pesha)
+                </th>
+
+                <td>
+                    @Html.DisplayFor(model => model.Pesha)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gjatesia)
+                </th>
+
+                <td>
+                    @Html.DisplayFor(model => model.Gjatesia)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Diametri)
+                </th>
+
+                <td>
+                    @Html.DisplayFor(model => model.Diametri)
+                </td>
+            </tr>
+        </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id_shishe, @class = "btn btn-success"  })  |
+    @Html.ActionLink("Shikoni detajet per cdo shishe", "Index", new { @class = "btn btn-success"  })  |
+    <a href="@Url.Action("AddToCart", "ShoppingCart", new { id = Model.Id_shishe,@class = "btn btn-success"  } )">Add to cart</a>
+</p>
+

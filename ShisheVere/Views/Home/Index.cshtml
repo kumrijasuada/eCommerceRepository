@@ -1,0 +1,225 @@
+﻿
+@model PagedList.IPagedList<ShisheVere.Models.Shishe>
+@using PagedList.Mvc;
+
+<style>
+    .wrap-pic-w img {
+        width: 70%;
+    }
+</style>
+
+<section class="bgwhite p-t-55 p-b-65">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
+                <div class="leftbar p-r-20 p-r-0-sm">
+                    <!--  -->
+                    <h4 class="m-text14 p-b-7">
+                        Categories
+                    </h4>
+                    <ul class="p-b-54">
+                        <li class="p-t-4">
+                            <a href="Home?search=all">
+                                All
+                            </a>
+                        </li>
+                        @Html.Partial("KategoriDetails", Model)
+                    </ul>
+
+                    <!--  -->
+                    <h4 class="m-text14 p-b-32">
+                        Filters
+                    </h4>
+
+                    <div class="filter-price p-t-22 p-b-50 bo3">
+                        <div class="m-text15 p-b-17">
+                            Diametri
+                        </div>
+
+                        <div class="wra-filter-bar">
+                            <div id="filter-bar"></div>
+                        </div>
+
+                        <div class="flex-sb-m flex-w p-t-16">
+                            <div class="s-text3 p-t-10 p-b-10">
+                                Range: <span id="value-lower">0</span>mm - <span id="value-upper">100</span>mm
+                            </div>
+                        </div>
+                        <div class="w-size11">
+                            <!-- Button -->
+                            <button class="flex-c-m size4 bg7 bo-rad-15 hov1 s-text14 trans-0-4" onclick="filterDiameter()">
+                                Filter
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="filter-price p-t-22 p-b-50 bo3">
+                        <div class="m-text15 p-b-17">
+                            Gjatesia
+                        </div>
+
+                        <div class="wra-filter-bar">
+                            <div id="filter-bar1"></div>
+                        </div>
+
+                        <div class="flex-sb-m flex-w p-t-16">
+                            <div class="s-text3 p-t-10 p-b-10">
+                                Range: <span id="value-lower1">0</span>mm - <span id="value-upper1">100</span>mm
+                            </div>
+                        </div>
+                        <div class="w-size11">
+                            <!-- Button -->
+                            <button class="flex-c-m size4 bg7 bo-rad-15 hov1 s-text14 trans-0-4" onclick="filter2()">
+                                Filter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-8 col-lg-9 p-b-50">
+                <!--  -->
+                <div class="flex-sb-m flex-w p-b-35">
+                    <div class="flex-w">
+                        <div class="search-product pos-relative bo4 of-hidden">
+                            @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+                            {
+                                <input class="s-text7 size6 p-l-23 p-r-50" name="search" placeholder="Search Products..." type="text">
+                                <button type="submit" class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
+                                    <i class="fs-12 fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- Product -->
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+
+                        <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
+                            <!-- Block2 -->
+                            <div class="block2">
+                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-label">
+                                    <img src="@Url.Content(item.Foto.Select(p=>p.File).FirstOrDefault())" alt="IMG-PRODUCT" height="250" />
+                                    <div class="block2-overlay trans-0-4">
+                                        <div class="block2 w-size11 trans-0-4" style="float:right">
+                                            <!-- Button -->
+                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" data-toggle="modal" data-target="#modal1" onclick="Afisho1(@item.Id_shishe)">
+                                                Details
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog  modal-dialog-centered " role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight:bold;">Details</h5>
+                                                </div>
+                                                <div class="modal-body" id="modalbody1">
+
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="block2-txt p-t-20">
+                                    <br />
+                                    <button class="block2-name dis-block s-text3 p-b-5" data-toggle="modal" data-target="#modal1" onclick="Afisho1(@item.Id_shishe)" style="display:inline-block;">
+                                        @Html.DisplayFor(modelItem => item.Emertim)
+                                    </button>
+                                    &emsp;&emsp;&emsp;
+                                    @if (Session["UserName"] == null)
+                                    {
+                                        <button id="edit" onclick="alert()" class="btn btn-dark">
+                                            Add to cart
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button id="edit" onclick="addtocart(@item.Id_shishe)" class="btn btn-dark">
+                                            Add to cart
+                                        </button>
+                                    }
+                                    <br />
+                                    <span class="block2-price m-text6 p-r-5">
+                                        $@item.Price
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- Pagination -->
+                <div class="pagination flex-m flex-w p-t-26">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    &nbsp;&nbsp;&nbsp; @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    function addtocart(id)
+    {
+            $.ajax({
+                type: "POST",
+                url: "/ShoppingCart/AddtoCart/"+id,
+                contentType: "application/json",
+                success:  swal("Added!", "Bottle is added to cart!", "success")
+            });
+    }
+</script>
+<script type="text/javascript">
+    function alert()
+    {
+        swal("Warning!", "You must login first!", "warning")
+
+    }
+</script>
+<script>
+    function filter2()
+    {
+        var id1; var id2;
+        id1 = document.getElementById('value-lower1').innerHTML;
+        id2 = document.getElementById('value-upper1').innerHTML;
+        console.log(id1);
+        console.log(id2);
+            //if (document.getElementById('value-lower1').value == null)
+            //    id1 = 0;
+            //else
+            //if (document.getElementById('value-upper1').value == null)
+            //    id2 = 100;
+            //else
+
+            var id3 = parseInt(id1);
+            var id4 = parseInt(id2);
+            window.location = "/Home?gjatesi1=" + id3 + "&gjatesi2=" + id4;
+
+      }
+</script>
+<script>
+    function filterDiameter()
+    {
+        var id1; var id2;
+        id1 = document.getElementById('value-lower').innerHTML;
+        id2 = document.getElementById('value-upper').innerHTML;
+        console.log(id1);
+        console.log(id2);
+        //if (document.getElementById('value-lower1').value == null)
+        //    id1 = 0;
+        //else
+        //if (document.getElementById('value-upper1').value == null)
+        //    id2 = 100;
+        //else
+
+        var id3 = parseInt(id1);
+        var id4 = parseInt(id2);
+        window.location = "/Home?diameter1=" + id3 + "&diameter2=" + id4;
+    }
+</script>

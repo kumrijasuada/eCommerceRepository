@@ -1,0 +1,246 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Product</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/fonts/themify/themify-icons.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/fonts/elegant-font/html-css/style.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/slick/slick.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/noui/nouislider.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/css/util.css">
+    <link rel="stylesheet" type="text/css" href="template/css/main.css">
+    <!--===============================================================================================-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</head>
+<body class="animsition">
+    <section>
+        <!-- Header -->
+        <header class="header1">
+            <!-- Header desktop -->
+            <div class="container-menu-header">
+                <div class="wrap_header">
+                    <!-- Logo -->
+                    <a href="@Url.Action("Index", "Home")" class="logo">
+                        <h3><span class="glyphicon glyphicon-glass"></span> Shitblerje Shishe Vererash <span class="glyphicon glyphicon-glass"></span></h3>
+                    </a>
+                    <!-- Menu -->
+                    <div class="wrap_menu">
+                        <nav class="menu">
+                            <ul class="main_menu">
+                                <li style="display:inline-block;">
+                                    <a href="@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-home"></span> Home</a>
+                                </li>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    if (Session["roli"] != null)
+                                    {
+                                        if (Session["roli"].ToString() != "admin")
+                                        {
+                                            if (Session["roli"].ToString() == "user")
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("myshoppingcart", "ShoppingCart")"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart </a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li><a href="@Url.Action("Index", "Prodhues")"><i class="fa fa-glass" aria-hidden="true"></i> My bottles </a></li>
+                                                <li><a href="@Url.Action("Transaksione", "Prodhues")"><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Transactions </a></li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Index", "Admin")"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a>
+                                            </li>
+                                        }
+                                    }
+                                    <li>
+                                        <a><i class="fa fa-user" aria-hidden="true"></i> Hello @Session["UserName"]</a>
+                                        <button style="display:inline-block;" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="/Perdorues/EditProfile">My Account</a>
+
+                                            @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">Log Out</a>
+                                            }
+                                        </div>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="@Url.Action("myshoppingcart","ShoppingCart")"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart </a>
+                                    </li>
+                                    <li><a href="@Url.Action("Registration","Account")"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                                    <li><a href="@Url.Action("Login","Account")"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </section>
+
+
+    <!-- Content page -->
+    @RenderSection("featured", required: false)
+    <section class="content-wrapper main-content clear-fix">
+        @RenderBody()
+    </section>
+
+
+
+    <!-- Back to top -->
+    <div class="btn-back-to-top bg0-hov" id="myBtn">
+        <span class="symbol-btn-back-to-top">
+            <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+        </span>
+    </div>
+
+    <!-- Container Selection -->
+    <div id="dropDownSelect1"></div>
+    <div id="dropDownSelect2"></div>
+
+
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/bootstrap/js/popper.js"></script>
+    <script type="text/javascript" src="template/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/select2/select2.min.js"></script>
+    <script type="text/javascript">
+        $(".selection-1").select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $('#dropDownSelect1')
+        });
+
+        $(".selection-2").select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $('#dropDownSelect2')
+        });
+    </script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/daterangepicker/moment.min.js"></script>
+    <script type="text/javascript" src="template/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/slick/slick.min.js"></script>
+    <script type="text/javascript" src="template/js/slick-custom.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/sweetalert/sweetalert.min.js"></script>
+
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/noui/nouislider.min.js"></script>
+    <script type="text/javascript">
+        /*[ No ui ]
+        ===========================================================*/
+        var filterBar = document.getElementById('filter-bar');
+
+        noUiSlider.create(filterBar, {
+            start: [0, 100],
+            connect: true,
+            range: {
+                'min': 0,
+                'max': 100
+            }
+        });
+
+        var skipValues = [
+            document.getElementById('value-lower'),
+            document.getElementById('value-upper')
+        ];
+
+        filterBar.noUiSlider.on('update', function (values, handle) {
+            skipValues[handle].innerHTML = Math.round(values[handle]);
+        });
+    </script>
+
+    <script type="text/javascript">
+        var filterBar1 = document.getElementById('filter-bar1');
+
+        noUiSlider.create(filterBar1, {
+            start: [0, 100],
+            connect: true,
+            range: {
+                'min': 0,
+                'max': 100
+            }
+        });
+
+        var skipValues1 = [
+            document.getElementById('value-lower1'),
+            document.getElementById('value-upper1')
+        ];
+
+        filterBar1.noUiSlider.on('update', function (values, handle) {
+            skipValues1[handle].innerHTML = Math.round(values[handle]);
+        });
+
+    </script>
+    <script src="template/js/main.js"></script>
+    <script>
+
+        var Afisho = function (Id) {
+
+            var url = "/Prodhues/Afisho?id=" + Id;
+
+            $("#myModalBodyDiv1").load(url, function () {
+                $("#exampleModalCenter1").modal("show");
+            })
+        }
+    </script>
+
+    <script>
+
+        function Afisho1(Id) {
+
+            var url = "/Prodhues/Afisho1?id=" + Id;
+
+            $("#modalbody1").load(url, function () {
+                $("#modal1").modal("show");
+            })
+        }
+    </script>
+
+
+</body>
+</html>

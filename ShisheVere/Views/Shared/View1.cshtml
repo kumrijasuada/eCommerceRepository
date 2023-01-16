@@ -1,0 +1,32 @@
+﻿
+@model ShisheVere.Models.Shishe
+
+<table class="table-shopping-cart">
+    <tbody>
+        <tr>
+            <th class="column-3">@Html.LabelFor(model => model.Emertim)</th>
+            <td class="column-4">@Html.DisplayFor(model => model.Emertim)</td>
+        </tr>
+        <tr>
+            <th class="column-3">Cmimi ($)</th>
+            <td class="column-4">@Html.DisplayFor(model => model.Price)</td>
+        </tr>
+        <tr>
+            <th class="column-3">@Html.LabelFor(model => model.Kapacitet) (ml)</th>
+            <td class="column-4">@Html.DisplayFor(model => model.Kapacitet)</td>
+        </tr>
+        <tr>
+            <th class="column-3">@Html.LabelFor(model => model.Pesha) (gr)</th>
+            <td class="column-4">@Html.DisplayFor(model => model.Pesha)</td>
+        </tr>
+        <tr>
+            <th class="column-3">@Html.LabelFor(model => model.Gjatesia) (cm)</th>
+            <td class="column-4">@Html.DisplayFor(model => model.Gjatesia)</td>
+        </tr>
+        <tr>
+            <th class="column-3">@Html.LabelFor(model => model.Diametri) (mm)</th>
+            <td class="column-4">@Html.DisplayFor(model => model.Diametri)</td>
+        </tr>
+        @Html.HiddenFor(model => model.Id_shishe)
+    </tbody>
+</table>

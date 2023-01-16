@@ -1,0 +1,484 @@
+﻿@model ShisheVere.ViewModels.AdminModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<html lang="en">
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Title Page-->
+    <title>Dashboard</title>
+    <link href="template1/css/font-face.css" rel="stylesheet" media="all">
+    <link href="template1/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="template1/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="template1/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="template1/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+
+    <link href="template1/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="template1/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="template1/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="template1/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="template1/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="template1/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="template1/css/theme.css" rel="stylesheet" media="all">
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/fonts/themify/themify-icons.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/fonts/elegant-font/html-css/style.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/slick/slick.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/noui/nouislider.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/css/util.css">
+    <link rel="stylesheet" type="text/css" href="template/css/main.css">
+    <!--===============================================================================================-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- MENU SIDEBAR-->
+        <aside class="menu-sidebar d-none d-lg-block">
+            <div class="menu-sidebar__content js-scrollbar1 ps">
+                <nav class="navbar-sidebar">
+                    <ul class="list-unstyled navbar__list">
+                        <li>&nbsp;</li>
+                        <li>&nbsp;</li>
+                        <li>
+                            <a href="@Url.Action("Index", "Admin")">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#perdorues">
+                                <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;&nbsp;User Details
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#kategori">
+                                <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;&nbsp;Kategori Details
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#shishe">
+                                <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;&nbsp;Shishe Details
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;&nbsp;Home Page</a>
+                        </li> 
+                       @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                       {
+                            @Html.AntiForgeryToken()
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;&nbsp;&nbsp;Log out</a></li>
+                       }
+                    </ul>
+                </nav>
+                <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div>
+            </div>
+        </aside>
+        <!-- END MENU SIDEBAR-->
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <header class="header-desktop">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="header-wrap">
+                                <input class="au-input au-input--xl" id="myInput" onkeyup="myFunction()" type="text" name="search" placeholder="Search for datas &amp; reports...">
+                            <div class="header-button">
+                                <div class="noti-wrap">
+
+                                    <div class="noti__item js-item-menu">
+                                        <i class="zmdi zmdi-notifications"></i>
+                                        @if (ViewBag.No > 0)
+                                        {
+                                        <span class="quantity" id="notify">@ViewBag.No</span>
+                                        }
+                                        <div class="notifi-dropdown js-dropdown">
+                                            <div class="notifi__title">
+                                                <p>You have @ViewBag.No Notifications</p>
+                                            </div>
+                                           @foreach (var item in Model.notification)
+                                           {
+                                               if (item.status == 0)
+                                               {
+                                                <div id="@item.id" class="notifi__item" style="background-color:#e5e5e5 !important;" onclick="status(@item.id)">
+                                                    <div class="bg-c1 img-cir img-40">
+                                                        <i class="zmdi zmdi-arrow-right"></i>
+                                                    </div>
+                                                    <div class="content">
+                                                        <a href="#@item.id_shishe" onclick="notify()">@item.name @item.action</a>
+                                                        <span class="date">April 12, 2018 06:50</span>
+                                                    </div>
+                                                </div>
+                                               }
+                                       
+                                           }
+                                            <div class="notifi__footer">
+                                                <a  data-toggle="modal" data-target="#mymodal" id="btn1" style="color:dodgerblue;" >All notifications</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="account-wrap">
+                                    <div class="account-item clearfix js-item-menu">
+                                        <div class="image">                                            
+                                        </div>
+                                        <div class="content">
+                                            <a class="js-acc-btn" href="#">
+                                            @if (Request.IsAuthenticated)
+                                            {
+                                                
+                                                   <label>Hello @Session["UserName"]!</label>
+                                                
+                                            }
+                                            </a>
+                                        </div>
+                                        <div class="account-dropdown js-dropdown">
+                                            <div class="account-dropdown__body">
+                                                <div class="account-dropdown__item">
+                                                    <a href="/Perdorues/EditProfile">
+                                                        <i class="zmdi zmdi-account"></i>Account
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="account-dropdown__item">
+                                                @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                    <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item"><i class="zmdi zmdi-power"></i>Log Out</a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- END HEADER DESKTOP-->
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">All notifications</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                            @foreach (var item in Model.notification)
+                                            {
+                                                <div class="notifi__item">
+                                                    <div class="bg-c1 img-cir img-40">
+                                                        <i class="zmdi zmdi-check-square"></i>
+                                                    </div>
+                                                    <div class="content">
+                                                        <a href="#@item.id_shishe">@item.name @item.action</a>
+                                                        <span class="date">April 12, 2018 06:50</span>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                            }
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     @Html.Partial("PerdoruesDetails", Model)
+                    </div>
+                    <br /><br /><hr />
+                    <div class="row">
+                     @Html.Partial("DetajeKategori", Model)
+                    </div>
+                    <br /><br />
+                    <div class="row">
+                     @Html.Partial("ShisheDetails",Model)
+                    </div><br /><br /><br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="template/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/bootstrap/js/popper.js"></script>
+    <script type="text/javascript" src="template/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/select2/select2.min.js"></script>
+    <script type="text/javascript">
+		$(".selection-1").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect2')
+		});
+    </script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/daterangepicker/moment.min.js"></script>
+    <script type="text/javascript" src="template/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/slick/slick.min.js"></script>
+    <script type="text/javascript" src="template/js/slick-custom.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/sweetalert/sweetalert.min.js"></script>
+
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/noui/nouislider.min.js"></script>
+    <script type="text/javascript">
+		/*[ No ui ]
+	    ===========================================================*/
+	    var filterBar = document.getElementById('filter-bar');
+
+	    noUiSlider.create(filterBar, {
+	        start: [ 50, 200 ],
+	        connect: true,
+	        range: {
+	            'min': 50,
+	            'max': 200
+	        }
+	    });
+
+	    var skipValues = [
+	    document.getElementById('value-lower'),
+	    document.getElementById('value-upper')
+	    ];
+
+	    filterBar.noUiSlider.on('update', function( values, handle ) {
+	        skipValues[handle].innerHTML = Math.round(values[handle]) ;
+	    });
+    </script>
+    <!--===============================================================================================-->
+
+
+    <script src="template/js/main.js"></script>
+
+        <script type="text/javascript">
+        function Del(Id){
+        var url="/Kategori/Delete?id="+Id;
+        $("#delete1").load(url,function(){
+            $("#Delete1").modal("show");
+        })}
+
+    </script>
+
+    <script type="text/javascript">
+        function delShishe(Id){
+        var url="/Shishe/Delete?id="+Id;
+        $("#delete2").load(url,function(){
+            $("#Delete2").modal("show");
+        })}
+
+    </script>
+    <script>
+        function notify() {
+            if(@ViewBag.No>0)
+            {
+                if(@ViewBag.No==1)
+                {document.getElementById("notify").style.display="none";}
+                else if(@ViewBag.No>1)
+                {  @ViewBag.No===@ViewBag.No-1;}
+            }
+            else{}
+        }
+    </script>
+
+    <script>
+
+    var edit=function(Id){
+
+        var url="/Perdorues/Edit?id="+Id;
+
+        $("#myModalBodyDiv1").load(url,function(){
+            $("#exampleModalCenter1").modal("show");
+        })
+    }
+    </script>
+
+    <script type="text/javascript">
+        function del(Id){
+        var url="/Perdorues/Delete?id="+Id;
+        $("#delete").load(url,function(){
+            $("#Delete").modal("show");
+
+        })}
+
+    </script>
+
+    <script>
+
+    var Afisho=function(Id){
+
+        var url="/Prodhues/Afisho?id="+Id;
+
+        $("#myModalBodyDiv1").load(url,function(){
+            $("#exampleModalCenter1").modal("show");
+
+        })
+
+    }
+    </script>
+
+    <script>
+
+function Afisho1(Id){
+
+        var url="/Prodhues/Afisho1?id="+Id;
+
+        $("#modalbody1").load(url,function(){
+            $("#modal1").modal("show");
+
+        })
+
+}
+    </script>
+
+    <script type="text/javascript">
+        function update(id) {
+            var select = document.getElementById("dropdown");
+            select.style.border = "4px solid white ";
+            var val = select.options[select.selectedIndex].value;
+            var model = {
+                Id: id,
+                Status: val
+            };
+            $.ajax({
+                type: "POST",
+                url: "/Shishe/Update",
+                data: JSON.stringify(model),
+                contentType: "application/json",
+                success:  swal("Changed!", "You changed the bottle's status!", "success")
+            });
+        }
+    </script>
+
+    <script>
+        function status(id)
+        {
+            $.ajax({
+                type: "POST",
+                url: "/Notification/Update?id="+id,
+                contentType: "application/json",
+                success: document.getElementById(id).style.backgroundColor="white"
+            });
+        }
+
+    </script>
+
+
+    <script>
+
+  $("#btn1").click(function() {
+    $("#mymodal").modal();
+  });
+
+    </script>
+
+    <script>
+function myFunction() {
+    var input, filter, table, tr, td, i;
+    var table1,tr1,td1,j;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+  table1 = document.getElementById("myTable1");
+  tr1 = table1.getElementsByTagName("tr");
+  for (j = i; j < tr1.length; j++) {
+      td1 = tr1[j].getElementsByTagName("td")[1];
+      if (td1) {
+          if (td1.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              tr1[j].style.display = "";
+          } else {
+              tr1[j].style.display = "none";
+          }
+      }
+  }
+
+}
+    </script>
+
+
+    <!-- Jquery JS-->
+    <script src="template1/vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="template1/vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="template1/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="template1/vendor/slick/slick.min.js">
+    </script>
+    <script src="template1/vendor/wow/wow.min.js"></script>
+    <script src="template1/vendor/animsition/animsition.min.js"></script>
+    <script src="template1/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+    </script>
+    <script src="template1/vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="template1/vendor/counter-up/jquery.counterup.min.js">
+    </script>
+    <script src="template1/vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="template1/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="template1/vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="template1/vendor/select2/select2.min.js">
+    </script>
+
+    <!-- Main JS-->
+    <script src="template1/js/main.js"></script>
+</body>
+</html>
+
+
+

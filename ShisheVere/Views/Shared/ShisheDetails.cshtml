@@ -1,0 +1,149 @@
+﻿@model ShisheVere.ViewModels.AdminModel
+
+<div class="col-md-12">
+    <h3 class="title-5 m-b-35"  id="shishe">Shishe Details</h3>
+    <div class="container-table-cart pos-relative" id="con2">
+        <div class="table table-data2">
+            <table class="table-shopping-cart" id="myTable1"> 
+                    <thead>
+                        <tr>
+                        <th class="column-2"></th>
+                        <th class="column-2">Product</th>
+                        <th class="column-2">Kapacitet (ml)</th>
+                        <th class="column-2">Pesha (g)</th>
+                        <th class="column-2">Gjatesia (cm)</th>
+                        <th class="column-2">Diametri (mm)</th>
+                        <th class="column-2">Status</th>
+                        </tr>
+                    </thead>
+                <tbody>
+                    @foreach (var item in Model.shishe)
+                    {
+                        int count = 0;
+                        foreach (var item1 in Model.notification)
+                        {
+                            if (item1.id_shishe == item.Id_shishe)
+                            {
+                                if (item1.status == 0)
+                                {
+                                    count=1;
+                                    <tr class="table-row" id="@item.Id_shishe"  style="background-color:blanchedalmond;-webkit-animation:pulse 10s;" onclick="color(@item.Id_shishe)">
+                                        <td class="column-2">
+                                            <div class="cart-img-product b-rad-4 o-f-hidden" id="zoom" onclick="delShishe(@item.Id_shishe)">
+                                                <img src="@Url.Content(item.Foto.Select(p => p.File).FirstOrDefault())" width="90" height="150" data-placement="top" title="" data-original-title="delete" data-toggle="modal" data-target="#delete2" />
+                                            </div>
+                                        </td>
+                                        <td class="column-2">@item.Emertim</td>
+                                        <td class="column-2">@item.Kapacitet</td>
+                                        <td class="column-2">@item.Pesha</td>
+                                        <td class="column-2">@item.Gjatesia</td>
+                                        <td class="column-2">@item.Diametri</td>
+                                        <td class="column-2">
+                                            @if (item.status == "aktiv")
+                                            {
+                                                <select id="dropdown" onchange="update(@item.Id_shishe)">
+                                                    <option value="aktiv">Aktiv</option>
+                                                    <option value="joaktiv">Joaktiv</option>
+                                                    <option value="pritje">Ne pritje</option>
+                                                </select>
+                                            }
+                                            else if (item.status == "joaktiv")
+                                            {
+                                                <select id="dropdown" onchange="update(@item.Id_shishe)">
+                                                    <option value="joaktiv">Joaktiv</option>
+                                                    <option value="pritje">Ne pritje</option>
+                                                    <option value="aktiv">Aktiv</option>
+                                                </select>
+                                            }
+                                            else if (item.status == "pritje")
+                                            {
+                                                <select id="dropdown" onchange="update(@item.Id_shishe)">
+                                                    <option value="pritje">Ne pritje</option>
+                                                    <option value="aktiv">Aktiv</option>
+                                                    <option value="joaktiv">Joaktiv</option>
+                                                </select>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+
+                                }
+                            }
+                        }
+                        if (count == 1) { }
+                        else
+                        {
+                        <tr class="table-row" id="@item.Id_shishe">
+                            <td class="column-2">
+                                <div class="cart-img-product b-rad-4 o-f-hidden" id="zoom" onclick="delShishe(@item.Id_shishe)">
+                                    <img src="@Url.Content(item.Foto.Select(p => p.File).FirstOrDefault())" width="90" height="150" data-placement="top" title="" data-original-title="delete" data-toggle="modal" data-target="#delete2" />                                
+                                </div>
+                            </td>
+                           
+                            <td class="column-2">@item.Emertim</td>
+                            <td class="column-2">@item.Kapacitet</td>
+                            <td class="column-2">@item.Pesha</td>
+                            <td class="column-2">@item.Gjatesia</td>
+                            <td class="column-2">@item.Diametri</td>
+                            <td class="column-2">
+                                @if (item.status == "aktiv")
+                                {
+                                    <select id="dropdown" onchange="update(@item.Id_shishe)">
+                                        <option value="aktiv">Aktiv</option>
+                                        <option value="joaktiv">Joaktiv</option>
+                                        <option value="pritje">Ne pritje</option>
+                                    </select>
+                                }
+                                else if (item.status == "joaktiv")
+                                {
+                                    <select id="dropdown" onchange="update(@item.Id_shishe)">
+                                        <option value="joaktiv">Joaktiv</option>
+                                        <option value="pritje">Ne pritje</option>
+                                        <option value="aktiv">Aktiv</option>
+                                    </select>
+                                }
+                                else if (item.status == "pritje")
+                                {
+                                    <select id="dropdown" onchange="update(@item.Id_shishe)">
+                                        <option value="pritje">Ne pritje</option>
+                                        <option value="aktiv">Aktiv</option>
+                                        <option value="joaktiv">Joaktiv</option>
+                                    </select>
+                                }
+                            </td>
+                        </tr>
+                        }
+                        <tr class="spacer"></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Delete2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content" id="delete2">
+        </div>
+    </div>
+</div>
+
+<style>
+        #zoom:hover
+        {
+            transform: scale(1.7); /*
+                 (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+</style>
+<script>
+    function color(id)
+    {
+        document.getElementById(id).style.backgroundColor = "white";
+    }
+</script>
+<script>
+    (function pulse() {
+        $('.DivBorder').delay(1000).animate({ 'border-color': 'transparent' }, 100).delay(1000).animate({ 'border-color': '#333' }, 100, pulse);
+    })();
+</script>

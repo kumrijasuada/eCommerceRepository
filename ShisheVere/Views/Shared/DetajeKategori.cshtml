@@ -1,0 +1,105 @@
+﻿@model ShisheVere.ViewModels.AdminModel
+
+<div class="col-md-12">
+   <div>
+       <!-- DATA TABLE -->
+    <h3 class="title-5 m-b-35" id="kategori" style="display: inline-block; ">Kategori Details</h3>
+       <div style="margin-left:1100px">
+           <button class="au-btn au-btn-icon au-btn--green au-btn--small" data-placement="top" title="" data-original-title="Add" id="add" onclick="add()" data-toggle="modal" data-target="#exampleModalCenter2">
+               <i class="zmdi zmdi-plus"></i>add item
+           </button>
+           <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+               <div class="modal-dialog modal-dialog-centered" role="document">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <h5 class="modal-title" id="exampleModalLongTitle">Add</h5>
+                       </div>
+                       <div class="modal-body" id="myModalBodyDiv1">
+                           @using (Html.BeginForm("Create", "Kategori", FormMethod.Post))
+                           {
+                               @Html.AntiForgeryToken()
+
+                               <div class="form-horizontal">
+                                   @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                   <div class="form-group">
+                                       @Html.Label("Emertim", htmlAttributes: new { @class = "control-label col-md-2" })
+                                       <div class="col-md-10">
+                                           @Html.Editor("Emertim", new { htmlAttributes = new { @class = "form-control" } })
+                                           @Html.ValidationMessage("Emertim", "", new { @class = "text-danger" })
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group">
+                                       @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-2" })
+                                       <div class="col-md-10">
+                                           @Html.Editor("Status", new { htmlAttributes = new { @class = "form-control" } })
+                                           @Html.ValidationMessage("Status", "", new { @class = "text-danger" })
+                                       </div>
+                                   </div>
+                                   <div class="form-group">
+                                       <div class="col-md-offset-2 col-md-10">
+                                           <input type="submit" value="Create" class="btn btn-primary" />
+                                       </div>
+                                   </div>
+                               </div>
+                           }
+
+
+                       </div>
+                       <div class="modal-footer">
+                           <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+    <div>
+        <table class="table table-data2">
+            <thead>
+                <tr>
+                    <th>   
+                        Emertim                     
+                    </th>
+                    <th>
+                       Status
+                    </th>   
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.kategori)
+                {
+
+                    <tr class="tr-shadow">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Emertim)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                      
+                        <td>
+                            <div class="table-data-feature">
+                                <button class="item" data-placement="top" title="" data-original-title="delete" data-toggle="modal" data-target="#delete1" onclick="Del(@item.Id_kategori)">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </button>
+                                <div class="modal fade" id="Delete1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                        <div class="modal-content" id="delete1">
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="spacer"></tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <!-- END DATA TABLE -->
+</div>

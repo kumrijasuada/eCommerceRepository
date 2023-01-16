@@ -1,0 +1,32 @@
+﻿@model PagedList.IPagedList<ShisheVere.Models.Shishe>
+
+@{
+
+    string[] arr = new string[99];
+    int i = 0;
+
+    foreach (var item in Model)
+    {
+        arr[i] = item.KATEGORI.Emertim;
+        i++;
+    }
+
+    for (int k = 0; k < arr.Count(); k++)
+    {
+        int j;
+        for (j = 0; j < k; j++)
+        {
+            if (arr[k] == arr[j])
+            { break; }
+        }
+
+        if (k == j)
+        {
+            <li class="p-t-4">
+                <a href="Home?kategori=@arr[k]">
+                    @arr[k]
+                </a>
+            </li>
+        }
+    }
+ }

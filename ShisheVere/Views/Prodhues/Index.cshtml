@@ -1,0 +1,378 @@
+﻿@model List<ShisheVere.Models.Shishe>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Product</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/fonts/themify/themify-icons.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/fonts/elegant-font/html-css/style.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/slick/slick.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/vendor/noui/nouislider.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="template/css/util.css">
+    <link rel="stylesheet" type="text/css" href="template/css/main.css">
+    <!--===============================================================================================-->
+
+</head>
+<body class="animsition" style="background-color:#f5f5f5">
+
+    <!-- Content page -->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="">
+                    <!--  -->
+                    <div class="">
+                        <div class="flex-w">
+                            <div class="m-t-5 m-b-5 m-r-10">
+                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" id="create" data-toggle="modal" data-target="#exampleModalCenter" style="width:130px !important">
+                                    Add new &nbsp;&nbsp;<span class="glyphicon glyphicon-plus-sign"></span>
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document" width="650px">
+                                        <div class="modal-content" style="width:600px !important">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="exampleModalLongTitle">Add new</h4>
+
+                                            </div>
+                                            <div class="modal-body">
+                                                @using (Html.BeginForm("CreateShishe", "Prodhues", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                <div class="form-horizontal">
+
+                                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                    <div class="form-group">
+                                                        @Html.Label("Emertim", htmlAttributes: new { @class = "control-label col-md-3" })
+                                                        <div class="col-md-9">
+                                                            <input type="text" name="Emertim" id="Emertim" class="form-control" style="border:black;background-color:#ecf2f8" required />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Kapacitet (ml)", htmlAttributes: new { @class = "control-label col-md-3" })
+                                                        <div class="col-md-9">
+
+                                                            <input type="number" name="Kapacitet" id="Kapacitet" class="form-control" step="0.01" required style="border:black;background-color:#ecf2f8" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Pesha (gr)", htmlAttributes: new { @class = "control-label col-md-3" })
+                                                        <div class="col-md-9">
+                                                            <input type="number" name="Pesha" id="Pesha" class="form-control" step="0.01" required style="border:black;background-color:#ecf2f8" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Gjatesia (cm)", htmlAttributes: new { @class = "control-label col-md-3" })
+                                                        <div class="col-md-9">
+                                                            <input type="number" name="Gjatesia" id="Gjatesia" class="form-control" required step="0.01" style="border:black;background-color:#ecf2f8" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Diametri (mm)", htmlAttributes: new { @class = "control-label col-md-3" })
+                                                        <div class="col-md-9">
+                                                            <input type="number" name="Diametri" id="Diametri" class="form-control" required step="0.01" style="border:black;background-color:#ecf2f8" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.Label("Cmimi ($)", htmlAttributes: new { @class = "control-label col-md-3" })
+                                                        <div class="col-md-9">
+                                                            <input type="number" name="Price" id="Price" class="form-control" required step="0.01" style="border:black;background-color:#ecf2f8" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.Label("Sasia ", htmlAttributes: new { @class = "control-label col-md-3" })
+                                                        <div class="col-md-9">
+                                                            <input type="number" name="Sasia" id="Sasia" class="form-control" required  style="border:black;background-color:#ecf2f8" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.Label("Foto", htmlAttributes: new { @class = "control-label col-md-3" })
+                                                        <div class="col-md-9">
+                                                            <input type="file" name="file" id="file" class="form-control" multiple required style="border:black;background-color:#ecf2f8" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.Label("Kategori", htmlAttributes: new { @class = "control-label col-md-3" })
+                                                        <div class="col-md-9">
+                                                            @Html.DropDownList("Kategori", (IEnumerable<SelectListItem>)ViewBag.Kategori, htmlAttributes: new { @class = "form-control", @style = "background-color:#ecf2f8;height:30px !important;border - color:black;height:34px !important" })
+                                                            @Html.ValidationMessage("Kategori", "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-offset-2 col-md-10">
+                                                            <input type="submit" value="Create" class="btn btn-primary" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                }
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <span class="s-text8 p-t-5 p-b-5">
+
+                        </span>
+                    </div>
+
+                    <!-- Product -->
+                    <div class="row">
+                            <div class="col-md-12">
+                                <div class="container-table-cart pos-relative" id="con2">
+                                    <div class="table table-data2">
+                                        <table class="table-shopping-cart" id="myTable1">
+                                            <thead>
+                                                <tr style="background-color:white">
+                                                    <th class="column-2"></th>
+                                                    <th class="column-2">Product</th>
+                                                    <th class="column-2">Kapacitet (ml)</th>
+                                                    <th class="column-2">Pesha (g)</th>
+                                                    <th class="column-2">Gjatesia (cm)</th>
+                                                    <th class="column-2">Diametri (mm)</th>
+                                                    <th class="column-2">Status</th>
+                                                    <th class="column-2" style="padding-left:30px">Actions</th>
+                                                </tr>
+                                                <tr style="background-color:#f5f5f5;height:5px;"></tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model)
+                                                {
+
+                                                    <tr style="background-color:white" id="@item.Id_shishe">
+                                                        <td class="column-1">
+                                                            <div class="cart-img-product b-rad-4 o-f-hidden" id="zoom" onclick="delShishe(@item.Id_shishe)">
+                                                                <img src="@Url.Content(item.Foto.Select(p => p.File).FirstOrDefault())"  data-placement="top" title="" data-original-title="delete" data-toggle="modal" data-target="#delete2" />
+                                                            </div>
+                                                        </td>
+                                                        <td class="column-2" style="padding-top: 80px !important">@item.Emertim</td>
+                                                        <td class="column-2" style="padding-top: 80px !important">@item.Kapacitet</td>
+                                                        <td class="column-2" style="padding-top: 80px !important">@item.Pesha</td>
+                                                        <td class="column-2" style="padding-top: 80px !important">@item.Gjatesia</td>
+                                                        <td class="column-2" style="padding-top: 80px !important">@item.Diametri</td>
+                                                        <td class="column-2" style="padding-top: 70px !important">
+                                                            @if (item.status == "aktiv")
+                                                            {
+                                                                <button type="button" class="btn btn-success">Aktiv</button>
+                                                            }
+                                                            else if (item.status == "joaktiv")
+                                                            {
+                                                                <button type="button" class="btn btn-danger">Joaktiv</button>
+                                                            }
+                                                            else if (item.status == "pritje")
+                                                            {
+                                                                <button type="button" class="btn btn-warning">Ne pritje</button>
+                                                            }
+                                                        </td>
+                                                        <td class="column-2" style="padding-top: 69px !important" colspan="2">
+                                                            <button class="btn btn-primary" id="edit" onclick="Afisho(@item.Id_shishe)" data-toggle="modal" data-target="#exampleModalCenter1">
+                                                                Edit
+                                                            </button>
+                                                             <button class="btn btn-primary" id="delete" onclick="DeleteConfirmed(@item.Id_shishe)">
+                                                            <!-- <button class="btn btn-primary" id="delete" onclick="location.href='DeleteConfirmed?id=@item.Id_shishe';"> -->
+                                                            Delete
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="background-color:#f5f5f5;height:7px;"></tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block2-txt p-t-20">
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
+                                                    </div>
+                                                    <div class="modal-body" id="myModalBodyDiv1">
+
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                         </div>
+                                 </div>
+                         </div>
+                  </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Footer -->
+    <!-- Back to top -->
+    <div class="btn-back-to-top bg0-hov" id="myBtn">
+        <span class="symbol-btn-back-to-top">
+            <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+        </span>
+    </div>
+
+    <!-- Container Selection -->
+    <div id="dropDownSelect1"></div>
+    <div id="dropDownSelect2"></div>
+
+
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/bootstrap/js/popper.js"></script>
+    <script type="text/javascript" src="template/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/select2/select2.min.js"></script>
+    <script type="text/javascript">
+		$(".selection-1").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect2')
+		});
+    </script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/daterangepicker/moment.min.js"></script>
+    <script type="text/javascript" src="template/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/slick/slick.min.js"></script>
+    <script type="text/javascript" src="template/js/slick-custom.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/sweetalert/sweetalert.min.js"></script>
+
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="template/vendor/noui/nouislider.min.js"></script>
+    <script type="text/javascript">
+		/*[ No ui ]
+	    ===========================================================*/
+	    var filterBar = document.getElementById('filter-bar');
+
+	    noUiSlider.create(filterBar, {
+	        start: [ 50, 200 ],
+	        connect: true,
+	        range: {
+	            'min': 50,
+	            'max': 200
+	        }
+	    });
+
+	    var skipValues = [
+	    document.getElementById('value-lower'),
+	    document.getElementById('value-upper')
+	    ];
+
+	    filterBar.noUiSlider.on('update', function( values, handle ) {
+	        skipValues[handle].innerHTML = Math.round(values[handle]) ;
+	    });
+    </script>
+    <!--===============================================================================================-->
+
+
+    <script src="template/js/main.js"></script>
+
+
+
+    <script>
+
+    var Afisho=function(Id){
+
+        var url="/Prodhues/Afisho?id="+Id;
+
+        $("#myModalBodyDiv1").load(url,function(){
+            $("#exampleModalCenter1").modal("show");
+
+        })
+
+    }
+    </script>
+
+    <script>
+
+function Afisho1(Id){
+
+        var url="/Prodhues/Afisho1?id="+Id;
+
+        $("#modalbody1").load(url,function(){
+            $("#modal1").modal("show");
+
+        })
+
+        }
+
+        function DeleteConfirmed(id)
+        {
+            
+            $.ajax({
+                url: "Shishe/DeleteConfirmed?id="+id,
+                type: "POST",
+                success: function (data) {
+                    
+                    location.href = '/Prodhues';
+
+                }
+            });
+
+        }
+    </script>
+
+ 
+</body>
+</html>
+
+
+
+
+
+
+
+

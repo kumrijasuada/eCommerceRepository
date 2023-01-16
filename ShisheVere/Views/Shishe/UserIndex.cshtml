@@ -1,0 +1,173 @@
+﻿@model IEnumerable<ShisheVere.Models.Shishe>
+
+@{
+    ViewBag.Title = "Index";
+}
+<body onload="myFunction(),filter()">
+    <h2>
+        Detajet e shisheve
+    </h2>
+    <br />
+    <p>
+
+    </p>
+    <p>
+        <label>Filter by gjatesi (cm) & by diameter (cm)</label> <br />
+        <div class="form-container" style="display:inline-block;">
+            <label>Gjatesia :</label>
+            <select id="gjatesi">
+                <option>Zgjidh</option>
+            </select>
+        </div>
+        &nbsp;&nbsp;
+        <div class="class1" style="display:inline-block;">
+            <label>Diametri :</label>
+            <select id="diameter">
+                <option>Zgjidh</option>
+            </select>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <label class="class1"></label>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button onclick="filter()" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-filter"></span>Filter</button>
+    </p>
+    <table class="table" id="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KATEGORI.Emertim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prodhues.Emertim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Emertim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kapacitet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pesha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gjatesia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Diametri)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KATEGORI.Emertim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prodhues.Emertim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Emertim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kapacitet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pesha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gjatesia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Diametri)
+                </td>
+                <td>
+
+                    @Html.ActionLink("Details", "Details", new { id = item.Id_shishe })
+
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+  <script>
+  function myFunction()
+    {
+        var table = document.getElementById("table");
+        var tr = table.getElementsByTagName("tr");
+        var arr = [];
+        var arr1 = [];
+        for (i = 1; i < tr.length; i++)
+        {
+            var txt = table.rows[i].cells.item(5).textContent.trim();
+
+            if (txt == arr.find(function (el) { return el == txt; }))
+                {
+
+                }
+            else
+            {
+                    arr.push(txt);
+                    var x = document.getElementById("gjatesi");
+                    var option = document.createElement("option");
+                    option.text = txt;
+                    x.add(option);
+             }
+
+            var txt1 = table.rows[i].cells.item(6).textContent.trim();
+            if (txt1 == arr1.find(function (el) { return el == txt1; }))
+            {
+
+            }
+            else
+            {
+                arr1.push(txt1);
+                var x1 = document.getElementById("diameter");
+                var option = document.createElement("option");
+                option.text = txt1;
+                x1.add(option);
+            }
+        }
+    }
+
+
+  function filter()
+  {
+          var lista1,lista2, filter1,filter2, table, tr, td, i;
+          lista1 = document.getElementById("gjatesi");
+          lista2 = document.getElementById("diameter");
+          filter1 = lista1.options[lista1.selectedIndex].text;
+          filter2 = lista2.options[lista2.selectedIndex].text;
+          table = document.getElementById("table");
+          tr = table.getElementsByTagName("tr");
+         for (i = 1; i < tr.length; i++) {
+              var txt = table.rows[i].cells.item(5).textContent.trim();
+              var txt1 = table.rows[i].cells.item(6).textContent.trim();
+
+              if (filter1 == "Zgjidh" && filter2 =="Zgjidh")
+              {
+                  for (i = 0; i < tr.length; i++)
+                      tr[i].style.display = "";
+              }
+              else if (filter1 == "Zgjidh" && filter2 != "Zgjidh")
+              {
+                  if(txt1==filter2)
+                      tr[i].style.display = "";
+              }
+              else if (filter1 != "Zgjidh" && filter2 == "Zgjidh")
+              {
+                  if (txt == filter1)
+                      tr[i].style.display = "";
+              }
+              else if (txt == filter1 && txt1 == filter2)
+              {
+                  tr[i].style.display = "";
+              }
+              else
+              {
+                  tr[i].style.display = "none";
+              }
+          }
+      }
+</script>

@@ -1,0 +1,17 @@
+﻿@model ShisheVere.Models.Perdorues
+
+
+<div class="modal-header">
+    <h3 class="modal-title" id="exampleModalCenterTitle">Delete</h3>
+</div>
+
+@using (Html.BeginForm("DeleteConfirmed", "Perdorues", new { id = Model.Id_perdorues }))
+{
+
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <strong>ARE YOU SURE ?</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="submit" class="btn btn-secondary" value="Yes">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+    </div>
+}

@@ -1,0 +1,239 @@
+﻿
+@model ShisheVere.Models.Perdorues
+
+@{ 
+    Layout = null;
+ }
+
+    <!-- Fontfaces CSS-->
+<link href="/template1/css/font-face.css" rel="stylesheet" media="all">
+<link href="/template1/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+<link href="/template1/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+<link href="/template1/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+<!-- Bootstrap CSS-->
+<link href="/template1/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+<!-- Vendor CSS-->
+<link href="/template1/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+<link href="/template1/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+<link href="/template1/vendor/wow/animate.css" rel="stylesheet" media="all">
+<link href="/template1/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+<link href="/template1/vendor/slick/slick.css" rel="stylesheet" media="all">
+<link href="/template1/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+<link href="/template1/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+
+<!-- Main CSS-->
+<link href="/template1/css/theme.css" rel="stylesheet" media="all">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/template/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/template/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/template/fonts/themify/themify-icons.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/template/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/template/fonts/elegant-font/html-css/style.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/template/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/template/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/template/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/template/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/template/vendor/slick/slick.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/template/vendor/noui/nouislider.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/template/css/util.css">
+<link rel="stylesheet" type="text/css" href="/template/css/main.css">
+
+
+<section>
+    <!-- Header -->
+    <header class="header1">
+        <!-- Header desktop -->
+        <div class="container-menu-header">
+            <div class="wrap_header">
+                <!-- Logo -->
+                <a href="@Url.Action("Index", "Home")" class="logo">
+                    <h3><span class="glyphicon glyphicon-glass"></span> Shitblerje Shishe Vererash <span class="glyphicon glyphicon-glass"></span></h3>
+                </a>
+                <!-- Menu -->
+                <div class="wrap_menu">
+                    <nav class="menu">
+                        <ul class="main_menu">
+                            <li style="display:inline-block;">
+                                <a href="@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-home"></span> Home</a>
+                            </li>
+                            @if (Request.IsAuthenticated)
+                            {
+                                if (Session["roli"] != null)
+                                {
+                                    if (Session["roli"].ToString() != "admin")
+                                    {
+                                        if (Session["roli"].ToString() == "user")
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("myshoppingcart", "ShoppingCart")"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart </a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li><a href="@Url.Action("Index", "Prodhues")"><i class="fa fa-glass" aria-hidden="true"></i> My bottles </a></li>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Index", "Admin")"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a>
+                                        </li>
+                                    }
+                                }
+                                <li>
+                                    <a><i class="fa fa-user" aria-hidden="true"></i> Hello @Session["UserName"]</a>
+                                    <button style="display:inline-block;" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">My Account</a>
+
+                                        @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">Log Out</a>
+                                        }
+                                    </div>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="@Url.Action("myshoppingcart","ShoppingCart")"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart </a>
+                                </li>
+                                        <li><a href="@Url.Action("Registration","Account")"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                                        <li><a href="@Url.Action("Login","Account")"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="alert alert-success" role="alert" id="alert" style="display:none;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color:black;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>SUCCESS!&nbsp;&nbsp;</strong>You successfully edited your profile.
+        <br />
+    </div>
+</section>
+    <hr />
+    <div class="form-horizontal">
+            <h3 style="margin-left:200px"><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Profile</h3>
+        <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Emer, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Emer, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Mbiemer, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Mbiemer, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Adrese, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Adrese, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })                   
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Telefon, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Telefon, new { htmlAttributes = new { @class = "form-control" } })                  
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })                 
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })                 
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button class="btn btn-primary" onclick="profile()">Edit</button>
+                </div>
+            </div>
+        </div>
+
+
+  <script type="text/javascript">
+      function profile()
+      {  
+          var s1 = document.getElementById("Emer").value;
+          var s2 = document.getElementById("Mbiemer").value;
+          var s3 = document.getElementById("Adrese").value;
+          var s4 = document.getElementById("Email").value;
+          var s5 = document.getElementById("Telefon").value;
+          var s6 = document.getElementById("Username").value;
+          var s7 = document.getElementById("Password").value;
+          var model =
+            {
+                Emer: s1,
+                Mbiemer: s2,
+                Adrese: s3,
+                Email: s4,
+                Telefon: s5,
+                Username: s6,
+                Password: s7,
+                Status: "aktiv",
+                Roli: "@Session["roli"]"
+            };
+          $.ajax({
+              type: "POST",
+              url: "/Perdorues/EditProfile",
+              data: JSON.stringify(model),
+              contentType: "application/json",
+              success: function () {
+                  sessionStorage.setItem('test', "true");
+                  location.href = location.href;
+              }
+          });
+       }
+
+      $(function () {
+          if (sessionStorage.getItem('test') == "true") {
+              document.getElementById("alert").style.display = "block";
+              sessionStorage.setItem('test', "false");
+          }
+        } );
+ </script>
+

@@ -1,0 +1,326 @@
+﻿
+
+@{
+    ViewBag.Title = "Success";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/template/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/template/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/template/fonts/themify/themify-icons.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/template/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/template/fonts/elegant-font/html-css/style.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/template/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/template/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/template/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/template/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/template/vendor/slick/slick.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/template/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/template/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<body class="animsition" onload="func1()">
+    <section>
+        <!-- Header -->
+        <header class="header1">
+            <!-- Header desktop -->
+            <div class="container-menu-header">
+                <div class="wrap_header">
+                    <!-- Logo -->
+                    <a href="@Url.Action("Index", "Home")" class="logo">
+                        <h3><span class="glyphicon glyphicon-glass"></span> Shitblerje Shishe Vererash <span class="glyphicon glyphicon-glass"></span></h3>
+                    </a>
+                    <!-- Menu -->
+                    <div class="wrap_menu">
+                        <nav class="menu">
+                            <ul class="main_menu">
+                                <li style="display:inline-block;">
+                                    <a href="@Url.Action("Index", "Home")"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                                </li>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    if (Session["roli"] != null)
+                                    {
+                                        if (Session["roli"].ToString() != "admin")
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("myshoppingcart", "ShoppingCart")"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart </a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Index", "Admin")">Dashboard</a>
+                                            </li>
+                                        }
+                                    }
+                                    <li>
+                                        <a><i class="fa fa-user" aria-hidden="true"></i> Hello @Session["UserName"]</a>
+                                        <button style="display:inline-block;" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="/Perdorues/EditProfile">My Account</a>
+
+                                            @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">Log Out</a>
+                                            }
+                                        </div>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="@Url.Action("myshoppingcart","ShoppingCart")"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart </a>
+                                    </li>
+                                    <li><a href="@Url.Action("Registration","Account")"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                                    <li><a href="@Url.Action("Login","Account")"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </section>
+
+
+
+    <!-- Cart -->
+    <section class="cart bgwhite p-t-70 p-b-100">
+        <div class="container" id="con1">
+            <h2 style="color:green"> PAGESA @ViewBag.Price $ U KRYE ME SUKSES.</h2>
+            <a href="@Url.Action("Index", "Home")">
+                <br /><br />
+                <h5>Click here to continue shopping !</h5>
+            </a>
+        </div>
+
+  
+    </section>
+    <!-- Back to top -->
+    <div class="btn-back-to-top bg0-hov" id="myBtn">
+        <span class="symbol-btn-back-to-top">
+            <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+        </span>
+    </div>
+
+    <!-- Container Selection -->
+    <div id="dropDownSelect1"></div>
+    <div id="dropDownSelect2"></div>
+    <div class="modal fade" id="Delete2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content" id="delete2">
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="~/template/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="~/template/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="~/template/vendor/bootstrap/js/popper.js"></script>
+    <script type="text/javascript" src="~/template/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="~/template/vendor/select2/select2.min.js"></script>
+    <script type="text/javascript" src="~/template/vendor/sweetalert/sweetalert.min.js"></script>
+
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="/template/vendor/noui/nouislider.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+            $(".selection-1").select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $('#dropDownSelect1')
+            });
+
+            $(".selection-2").select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $('#dropDownSelect2')
+            });
+    </script>
+    <!--===============================================================================================-->
+    <script src="/template/js/main.js"></script>
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+    function changeprice(id,price, quantity)
+    {
+        var price = price * quantity;
+        console.log(price);
+        document.getElementById(id).innerHTML = price;
+
+    }
+
+    function update(id) {
+        var value = document.getElementById("sasia").value;
+        var model =
+            {
+            id: id,
+            Sasia: parseInt(value)
+        };
+        console.log(model);
+            $.ajax({
+                type: "POST",
+                url: "/ShoppingCart/Update",
+                data: JSON.stringify(model),
+                contentType: "application/json",
+                success:  swal("Modified!", "Quantity changed!", "success")
+            });
+        }
+</script>
+<script>
+    function show() {
+        document.getElementById("check").style.display = "block";
+       // $('html, body').animate({ scrollTop: 700 }, 'slow');
+        document.location = '@Url.Action("PaymentWithPaypal", "ShoppingCart")';
+      //  delafterpay();
+
+    }
+
+</script>
+<script type="text/javascript">
+        function delShop(Id){
+        var url="/ShoppingCart/Delete?id="+Id;
+        $("#delete2").load(url,function(){
+            $("#Delete2").modal("show");
+        })}
+
+</script>
+
+<script type="text/javascript">
+    function order()
+    {
+        //document.getElementById("form1").
+        var val1 = document.getElementById("name").value;
+        var val2 = document.getElementById("phone").value;
+        var val3 = document.getElementById("email").value;
+        var val4 = document.getElementById("adress").value;
+
+        if(val1=="" || val2==""|| val3=="" || val4=="")
+        {
+            swal("Warning!", "Please fill all the fields!", "warning");
+            return;
+        }
+        else
+        {
+            var model =
+             {
+                 Name: val1,
+                 Phone: val2,
+                 Email: val3,
+                 Adress: val4
+             };
+            $.ajax({
+                type: "POST",
+                url: "/ShoppingCart/Porosi",
+                data: JSON.stringify(model),
+                contentType: "application/json",
+                success: swal("Success!", "You just made an order!", "success").then(function (){ document.getElementById("check").style.display = "none"; })
+            });
+        }
+    }
+
+</script>
+
+<script type="text/javascript">
+    function del()
+    {
+        swal({
+            title: "Warning!",
+            text: "Are you sure you want to delete all your shopping cart ?",
+            icon:"warning",
+            buttons:
+            {
+                cancel: {
+                    text: "Cancel",
+                    value: null,
+                    visible: true,
+                    className: "",
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "OK",
+                    value: true,
+                    visible: true,
+                    className: "btn-danger",
+                    closeModal: true
+                }
+            },
+        }).then(function(isConfirm) {
+            if (isConfirm)
+            {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/ShoppingCart/DeleteShop",
+                    contentType: "application/json",
+                    success: swal("Deleted!", "Your shopping cart has been deleted.", "success").then(function (){
+                        window.location.reload();
+                    })
+                });
+            } else
+            {
+                swal("Cancelled", "Your shopping cart is not deleted :)", "error");
+            }})
+    }
+
+
+
+</script>
+
+<script type="text/javascript">
+    function delafterpay() {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/ShoppingCart/DeleteShop",
+                    contentType: "application/json",
+                    })
+                  }
+
+
+
+</script>
+
+<script>
+    function func1()
+    {
+        if(@ViewBag.cart == 0)
+        {
+            document.getElementById("con1").style.display = "block";
+            document.getElementById("con2").style.display = "none";
+        }
+        else
+        {
+            document.getElementById("con2").style.display = "block";
+            document.getElementById("con1").style.display = "none";
+        }
+    }
+</script>
+

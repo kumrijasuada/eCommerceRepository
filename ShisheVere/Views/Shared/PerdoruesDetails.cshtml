@@ -1,0 +1,121 @@
+﻿
+@model ShisheVere.ViewModels.AdminModel
+
+<div class="col-md-12">
+    <!-- DATA TABLE -->
+    <h3 class="title-5 m-b-35"  id="perdorues">User Details</h3>
+    <div>
+        <table class="table table-data2" id="myTable">
+            <thead>
+                <tr>
+                    <th>
+                       Emer
+                    </th>
+                    <th>
+                        Mbiemer
+                    </th>
+                    <th>
+                      Adrese
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                       Telefon
+                    </th>
+                    <th>
+                       Status
+                    </th>
+                    <th>
+                      Username
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                    <th>
+                       Roli
+                    </th>
+                    <th></th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var item in Model.perdorues)
+                {
+                    
+                        <tr class="tr-shadow">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Emer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Mbiemer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Adrese)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefon)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Username)
+                        </td>
+                        <td>
+                            @item.Password
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Roli)
+                        </td>
+
+
+                        <td>
+                            <div class="table-data-feature">
+                                <button class="item" data-placement="top" title="" data-original-title="Edit" id="edit" onclick="edit(@item.Id_perdorues)" data-toggle="modal" data-target="#exampleModalCenter1">
+                                    <i class="zmdi zmdi-edit"></i>
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
+                                            </div>
+                                            <div class="modal-body" id="myModalBodyDiv1">
+
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="item" data-placement="top" title="" data-original-title="delete" data-toggle="modal" data-target="#delete" onclick="del(@item.Id_perdorues)">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </button>
+                                <div class="modal fade" id="Delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                        <div class="modal-content" id="delete">
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="spacer"></tr>
+                    }
+                
+            </tbody>
+        </table>
+    </div>
+    <!-- END DATA TABLE -->
+</div>
