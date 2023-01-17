@@ -322,7 +322,7 @@ namespace ShisheVere.Controllers
 
             var username = Session["UserName"].ToString();
 
-            string connectionString = @"Data Source=ERJON\ERJONSERVER;Initial Catalog=ecommerce;Integrated Security=True";
+            string connectionString = @"Data Source=ERJONKUKA\EKSERVER;Initial Catalog=ecommerce_1;Integrated Security=True";
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("func_totalprice", con);
             con.Open();
@@ -350,7 +350,7 @@ namespace ShisheVere.Controllers
 
                  sasidb = sasidb + shopSasidb.Sum(x => Convert.ToInt32(x.Sasia));*/
 
-                string connectionString = @"Data Source=ERJON\ERJONSERVER;Initial Catalog=ecommerce;Integrated Security=True";
+                string connectionString = @"Data Source=ERJONKUKA\EKSERVER;Initial Catalog=ecommerce_1;Integrated Security=True";
                 SqlConnection con = new SqlConnection(connectionString);
                 SqlCommand cmd = new SqlCommand("CheckSasia", con);
                 con.Open();

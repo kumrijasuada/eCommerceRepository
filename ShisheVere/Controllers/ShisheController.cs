@@ -76,16 +76,18 @@ namespace AppShisheVere.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(FormCollection form, HttpPostedFileBase file)
         {
-            Shishe shishe = new Shishe();
-            shishe.Emertim = form["Emertim"].ToString();
-            shishe.Kapacitet = Convert.ToDecimal(form["Kapacitet"]);
-            shishe.Pesha = Convert.ToDecimal(form["Pesha"]);
-            shishe.Gjatesia = Convert.ToDecimal(form["Gjatesia"]);
-            shishe.Diametri = Convert.ToDecimal(form["Diametri"]);
-            shishe.Price = Convert.ToDecimal(form["Price"]);
-            shishe.id_kategori = Convert.ToInt32(form["id_kategori"]);
-            shishe.id_prodhues = Convert.ToInt32(form["id_prodhues"]);
-            shishe.status = "pritje";
+            Shishe shishe = new Shishe
+            {
+                Emertim = form["Emertim"].ToString(),
+                Kapacitet = Convert.ToDecimal(form["Kapacitet"]),
+                Pesha = Convert.ToDecimal(form["Pesha"]),
+                Gjatesia = Convert.ToDecimal(form["Gjatesia"]),
+                Diametri = Convert.ToDecimal(form["Diametri"]),
+                Price = Convert.ToDecimal(form["Price"]),
+                id_kategori = Convert.ToInt32(form["id_kategori"]),
+                id_prodhues = Convert.ToInt32(form["id_prodhues"]),
+                status = "pritje"
+            };
             if (ModelState.IsValid)
             {
                 db.Shishe.Add(shishe);

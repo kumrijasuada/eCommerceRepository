@@ -272,14 +272,12 @@ namespace ShisheVere.Controllers
                 string Email = model["Email"].ToString();
                 if (!string.IsNullOrEmpty(Email))
                 {
-
                     string username = GetUserNameByEmail(Email);
                     if (string.IsNullOrEmpty(username))
                     {
-                        TempData["reset"] = "Nje email i tille nuk ekziston!!";
+                        TempData["reset"] = "Një email i tillë nuk ekziston!!";
                         return View("LostPassword");
                     }
-
                     else
                     {
                         Kerkesat kerkese = new Kerkesat();
@@ -292,13 +290,14 @@ namespace ShisheVere.Controllers
                         kerkese.perdoruesId = id;
                         db.Kerkesat.Add(kerkese);
                         db.SaveChanges();
+
                         MailMessage email = new MailMessage();
                         StringBuilder trupiEmail = new StringBuilder();
-                        trupiEmail.Append("Pershendetje " + username + ",<br/><br/>");
-                        trupiEmail.Append(" Ju mund te ndryshoni passwordin duke klikuar ne linkun e meposhtem" + "<br/><br/>");
+                        trupiEmail.Append("Përshendetje " + username + ",<br/><br/>");
+                        trupiEmail.Append(" Ju mund të ndryshoni passwordin duke klikuar ne linkun e meposhtem" + "<br/><br/>");
                         trupiEmail.Append("http://localhost:51358/Account/ResetPassword?id=" + txt);
                         email.To.Add(Email);
-                        email.From = new MailAddress("erion.ibraliu@fshnstudent.info");
+                        email.From = new MailAddress("kumrijasuada@gmail.com");
                         email.IsBodyHtml = true;
                         email.Body = trupiEmail.ToString();
                         email.Subject = "Rivendos Password";
@@ -313,13 +312,13 @@ namespace ShisheVere.Controllers
                         };
                         client.Credentials = new System.Net.NetworkCredential()
                         {
-                            UserName = "erion.ibraliu@fshnstudent.info",
-                            Password = "1999denis"
+                            UserName = "kumrijasuada@gmail.com",
+                            Password = "bpctmcawjsqzdomj"
                         };
 
                         client.Send(email);
                     }
-                    TempData["reset"] = "Email-i u dergua me sukses";
+                    TempData["reset"] = "Email-i u dërgua me sukses";
                     return View("LostPassword");
                 }
                 else
@@ -332,7 +331,6 @@ namespace ShisheVere.Controllers
             {
                 return View("LostPassword");
             }
-
         }
 
         [AllowAnonymous]
@@ -349,53 +347,55 @@ namespace ShisheVere.Controllers
         }
 
 
-        // ToDo
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(FormCollection perdorues, string id)
+        {
+            StoreContext db = new StoreContext();
+            string idKerkese = Request.QueryString["id"];
+            string gjej = (from u in db.Kerkesat
+                           where string.Compare(idKerkese, u.kerkesaId) == 0
+                           select u.kerkesaId).FirstOrDefault();
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult ResetPassword(FormCollection perdorues, string id)
-        //{
-        //    StoreContext db = new StoreContext();
-        //    string idKerkese = Request.QueryString["id"];
-        //    string gjej = (from u in db.Kerkesat
-        //                   where string.Compare(idKerkese, u.kerkesaId) == 0
-        //                   select u.kerkesaId).FirstOrDefault();
-        //    if (!string.IsNullOrEmpty(gjej))
-        //    {
-        //        string Username = perdorues["username"].ToString();
-        //        string Pass1 = perdorues["pass1"].ToString();
-        //        string Confpass1 = perdorues["confpass1"].ToString();
+            if (!string.IsNullOrEmpty(gjej))
+            {
+                string Username = perdorues["username"].ToString();
+                string Pass1 = perdorues["pass1"].ToString();
+                string Confpass1 = perdorues["confpass1"].ToString();
 
-        //        if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Pass1) || string.IsNullOrEmpty(Confpass1))
-        //        {
-        //            TempData["sukses"] = "Ju lutemi plotesoni te gjitha fushat!";
-        //            return View("ResetPassword");
+                if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Pass1) || string.IsNullOrEmpty(Confpass1))
+                {
+                    TempData["sukses"] = "Ju lutemi plotësoni të gjitha fushat!";
+                    return View("ResetPassword");
 
-        //        }
-        //        else if (Pass1 != Confpass1)
-        //        {
-        //            TempData["sukses"] = "Ju lutemi sigurohuni qe passwordi i ri te jete i njejte me passwordin e konfirmuar!";
-        //            return View("ResetPassword");
-        //        }
-        //        else
-        //        {
-        //            var userInfo = db.Perdorues.Where(s => s.Username.Equals(Username.Trim())).FirstOrDefault();
-        //            if (userInfo != null)
-        //            {
-        //                userInfo.Password = Pass1;
-        //                db.SaveChanges();
-        //                TempData["sukses"] = "Passwordi u ndryshua me sukses!";
-        //                return View("ResetPassword");
-        //            }
-        //            else
-        //            {
-        //                TempData["sukses"] = "Nje llogari e tille nuk ekziston";
-        //                return View("ResetPassword");
-        //            }
-        //        }
-        //    }
-        //    else return RedirectToAction("Index", "NotFound");
-        //}
+                }
+                else if (Pass1 != Confpass1)
+                {
+                    TempData["sukses"] = "Ju lutemi sigurohuni që passwordi i ri të jete i njejtë me passwordin e konfirmuar!";
+                    return View("ResetPassword");
+                }
+                else
+                {
+                    Tuple<byte[], byte[]> passwordAndSalt = PasswordHashing(Pass1);
+                    var userInfo = db.Perdorues.Where(s => s.Username.Equals(Username.Trim())).FirstOrDefault();
+                    if (userInfo != null)
+                    {
+                        userInfo.Password = passwordAndSalt.Item1;
+                        userInfo.Salt = passwordAndSalt.Item2;
+                        db.SaveChanges();
+                        TempData["sukses"] = "Passwordi u ndryshua me sukses!";
+                        return View("ResetPassword");
+                    }
+                    else
+                    {
+                        TempData["sukses"] = "Një llogari e tillë nuk ekziston";
+                        return View("ResetPassword");
+                    }
+                }
+            }
+            else return RedirectToAction("Index", "NotFound");
+        }
+
     }
 }
