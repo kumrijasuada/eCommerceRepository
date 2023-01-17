@@ -83,9 +83,9 @@ namespace AppShisheVere.Controllers
             shishe.Gjatesia = Convert.ToDecimal(form["Gjatesia"]);
             shishe.Diametri = Convert.ToDecimal(form["Diametri"]);
             shishe.Price = Convert.ToDecimal(form["Price"]);
-            shishe.id_kategori = Convert.ToInt32(form["id_kategori"]);
-            shishe.id_prodhues = Convert.ToInt32(form["id_prodhues"]);
-            shishe.status = "pritje";
+            shishe.Id_kategori = Convert.ToInt32(form["id_kategori"]);
+            shishe.Id_prodhues = Convert.ToInt32(form["id_prodhues"]);
+            shishe.Status = "pritje";
             if (ModelState.IsValid)
             {
                 db.Shishe.Add(shishe);
@@ -117,8 +117,8 @@ namespace AppShisheVere.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewBag.id_kategori = new SelectList(db.Kategori, "Id_kategori", "Emertim", shishe.id_kategori);
-            ViewBag.id_prodhues = new SelectList(db.Prodhues, "Id_prodhues", "Emertim", shishe.id_prodhues);
+            ViewBag.id_kategori = new SelectList(db.Kategori, "Id_kategori", "Emertim", shishe.Id_kategori);
+            ViewBag.id_prodhues = new SelectList(db.Prodhues, "Id_prodhues", "Emertim", shishe.Id_prodhues);
             return View(shishe);
         }
         [CostumAuthorize(Roles = "admin")]
@@ -134,8 +134,8 @@ namespace AppShisheVere.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.id_kategori = new SelectList(db.Kategori, "Id_kategori", "Emertim", shishe.id_kategori);
-            ViewBag.id_prodhues = new SelectList(db.Prodhues, "Id_prodhues", "Emertim", shishe.id_prodhues);
+            ViewBag.id_kategori = new SelectList(db.Kategori, "Id_kategori", "Emertim", shishe.Id_kategori);
+            ViewBag.id_prodhues = new SelectList(db.Prodhues, "Id_prodhues", "Emertim", shishe.Id_prodhues);
             return View(shishe);
         }
         [CostumAuthorize(Roles = "admin")]
@@ -180,8 +180,8 @@ namespace AppShisheVere.Controllers
                     ViewBag.message = "Please choose only Image file";
                 }
             }
-            ViewBag.id_kategori = new SelectList(db.Kategori, "Id_kategori", "Emertim", shishe.id_kategori);
-            ViewBag.id_prodhues = new SelectList(db.Prodhues, "Id_prodhues", "Emertim", shishe.id_prodhues);
+            ViewBag.id_kategori = new SelectList(db.Kategori, "Id_kategori", "Emertim", shishe.Id_kategori);
+            ViewBag.id_prodhues = new SelectList(db.Prodhues, "Id_prodhues", "Emertim", shishe.Id_prodhues);
             return View();
         }
 
@@ -211,7 +211,7 @@ namespace AppShisheVere.Controllers
         {
             db.Configuration.ProxyCreationEnabled = false;
             Shishe sh = db.Shishe.Where(p => p.Id_shishe == shishe.Id).FirstOrDefault();
-            sh.status = shishe.Status;
+            sh.Status = shishe.Status;
             db.SaveChanges();
             return Json(sh, JsonRequestBehavior.AllowGet);
         }

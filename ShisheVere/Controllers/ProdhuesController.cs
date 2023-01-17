@@ -74,12 +74,12 @@ namespace ShisheVere.Controllers
             shishe.Gjatesia = Convert.ToDecimal(form["Gjatesia"]);
             shishe.Sasia= Convert.ToInt32(form["Sasia"]);
             shishe.Diametri = Convert.ToDecimal(form["Diametri"]);
-            shishe.id_kategori = Convert.ToInt32(form["Kategori"]);
+            shishe.Id_kategori = Convert.ToInt32(form["Kategori"]);
             shishe.Price = Convert.ToDecimal(form["Price"]);
             string str = Session["UserName"].ToString();
             int p1 = db.Prodhues.Where(p => p.Emertim == str).Select(p => p.Id_prodhues).FirstOrDefault();
-            shishe.id_prodhues = p1;
-            shishe.status = "pritje";
+            shishe.Id_prodhues = p1;
+            shishe.Status = "pritje";
             if (ModelState.IsValid)
             {
                 db.Shishe.Add(shishe);
@@ -135,7 +135,7 @@ namespace ShisheVere.Controllers
                 model.Kapacitet = emp.Kapacitet;
                 model.Pesha = emp.Pesha;
                 model.Gjatesia = emp.Gjatesia;
-                model.status = "pritje";
+                model.Status = "pritje";
             }
             return PartialView("_View", model);
         }
@@ -152,7 +152,7 @@ namespace ShisheVere.Controllers
                 model.Pesha = emp.Pesha;
                 model.Gjatesia = emp.Gjatesia;
                 model.Price = emp.Price;
-                model.status = "pritje";
+                model.Status = "pritje";
             }
             return PartialView("View1", model);
         }
