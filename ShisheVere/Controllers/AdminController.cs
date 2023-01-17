@@ -16,7 +16,7 @@ namespace ShisheVere.Controllers
         {
             var perdorues = db.Perdorues.Where(p => p.Roli == "user" || p.Roli == "prodhues").ToList();
             var shishe = db.Shishe.Include(s => s.KATEGORI).Include(s => s.Prodhues).ToList();
-            var no = db.Notifications.Where(p => p.status == 0).ToList();
+            var no = db.Notifications.Where(p => p.Status == 0).ToList();
             AdminModel adm = new AdminModel();
             for (int i = 0; i < perdorues.Count; i++)
             {
@@ -30,7 +30,7 @@ namespace ShisheVere.Controllers
             {
                 adm.notification.Add(no[i]);
             }
-            ViewBag.No = db.Notifications.Where(n => n.status == 0).Count();
+            ViewBag.No = db.Notifications.Where(n => n.Status == 0).Count();
             ViewBag.Id = db.Perdorues.Where(p => p.Roli == "admin").Select(p => p.Id_perdorues).FirstOrDefault();
             return View(adm);
         }  

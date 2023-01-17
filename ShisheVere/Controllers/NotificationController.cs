@@ -17,8 +17,8 @@ namespace ShisheVere.Controllers
         [HttpPost]
         public JsonResult Update(int id)
         {
-            Notification no = db.Notifications.Where(p =>p.id == id).FirstOrDefault();
-            no.status = 1;
+            Notification no = db.Notifications.Where(p =>p.Id == id).FirstOrDefault();
+            no.Status = 1;
             db.SaveChanges();
             return Json(null, JsonRequestBehavior.AllowGet);
         }
