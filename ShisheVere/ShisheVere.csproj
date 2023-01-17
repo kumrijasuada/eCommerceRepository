@@ -169,6 +169,10 @@
     <Compile Include="Migrations\202301161734074_Initial.Designer.cs">
       <DependentUpon>202301161734074_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202301171211081_revertedChanges.cs" />
+    <Compile Include="Migrations\202301171211081_revertedChanges.Designer.cs">
+      <DependentUpon>202301171211081_revertedChanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Foto.cs" />
     <Compile Include="Models\Kategori.cs" />
@@ -3381,6 +3385,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202301161734074_Initial.resx">
       <DependentUpon>202301161734074_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301171211081_revertedChanges.resx">
+      <DependentUpon>202301171211081_revertedChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
