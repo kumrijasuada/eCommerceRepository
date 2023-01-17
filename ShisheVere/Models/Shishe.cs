@@ -13,7 +13,8 @@ namespace ShisheVere.Models
         }
 
         public Shishe()
-        {}
+        {
+        }
 
         [Key]
         public int Id_shishe { get; set; }
@@ -30,11 +31,11 @@ namespace ShisheVere.Models
 
         public decimal Price { get; set; }
         public int Sasia { get; set; }
-        public int Id_kategori { get; set; }
+        public int id_kategori { get; set; }
 
-        public int Id_prodhues { get; set; }
+        public int id_prodhues { get; set; }
 
-        public string Status { get; set; }
+        public string status { get; set; }
 
         public virtual ICollection<Foto> Foto { get; set; }
 

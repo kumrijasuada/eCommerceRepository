@@ -24,7 +24,7 @@ namespace AppShisheVere.Controllers
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             IPagedList<Shishe> shishe = null;
-            shishe = db.Shishe.Include(s => s.KATEGORI).Include(s => s.Prodhues).Where(p => p.Status == "aktiv").OrderBy(p=>p.Id_shishe).ToPagedList(pageIndex, pageSize);
+            shishe = db.Shishe.Include(s => s.KATEGORI).Include(s => s.Prodhues).Where(p => p.status == "aktiv").OrderBy(p=>p.Id_shishe).ToPagedList(pageIndex, pageSize);
                      
             if (!string.IsNullOrEmpty(search))
             {
