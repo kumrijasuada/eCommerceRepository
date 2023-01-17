@@ -112,10 +112,10 @@ namespace ShisheVere.Controllers
                 var UserName = Session["UserName"].ToString();
                 string prodhues_name = db.Perdorues.Where(x => x.Username == UserName).Select(x => x.Emer).FirstOrDefault()+" "+ db.Perdorues.Where(x => x.Username == UserName).Select(x => x.Mbiemer).FirstOrDefault();
                 Notification no = new Notification();
-                no.Name = prodhues_name;
-                no.Id_shishe = shishe.Id_shishe;
-                no.Action = "shtoi nje shishe te re";
-                no.Status = 0;
+                no.name = prodhues_name;
+                no.id_shishe = shishe.Id_shishe;
+                no.action = "shtoi nje shishe te re";
+                no.status = 0;
                 db.Notifications.Add(no);
                 db.SaveChanges();
                 return RedirectToAction("Index");
