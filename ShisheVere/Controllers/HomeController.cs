@@ -1,5 +1,4 @@
 ﻿using ShisheVere.DBCONTEXT;
-using ShisheVere.Kategoriviewmodel;
 using ShisheVere.Models;
 using ShisheVere.ViewModels;
 using System;

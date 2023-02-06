@@ -1,4 +1,4 @@
-﻿namespace ShisheVere.Kategoriviewmodel
+﻿namespace ShisheVere.ViewModels
 {
     public class Kategorite
     {

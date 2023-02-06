@@ -297,7 +297,7 @@ namespace ShisheVere.Controllers
                         trupiEmail.Append(" Ju mund të ndryshoni passwordin duke klikuar ne linkun e meposhtem" + "<br/><br/>");
                         trupiEmail.Append("http://localhost:51358/Account/ResetPassword?id=" + txt);
                         email.To.Add(Email);
-                        email.From = new MailAddress("kumrijasuada@gmail.com");
+                        email.From = new MailAddress("suada.kumrija@fshnstudent.info");
                         email.IsBodyHtml = true;
                         email.Body = trupiEmail.ToString();
                         email.Subject = "Rivendos Password";
@@ -312,8 +312,8 @@ namespace ShisheVere.Controllers
                         };
                         client.Credentials = new System.Net.NetworkCredential()
                         {
-                            UserName = "kumrijasuada@gmail.com",
-                            Password = "bpctmcawjsqzdomj"
+                            UserName = "suada.kumrija@fshnstudent.info",
+                            Password = "lnjivxruyiokzycy"
                         };
 
                         client.Send(email);
@@ -345,7 +345,6 @@ namespace ShisheVere.Controllers
                 return RedirectToAction("Index", "NotFound");
             else return View();
         }
-
 
         [HttpPost]
         [AllowAnonymous]
@@ -396,6 +395,5 @@ namespace ShisheVere.Controllers
             }
             else return RedirectToAction("Index", "NotFound");
         }
-
     }
 }

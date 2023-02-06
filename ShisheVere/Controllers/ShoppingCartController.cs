@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using System.Configuration;
 
 namespace ShisheVere.Controllers
 {
@@ -32,16 +33,16 @@ namespace ShisheVere.Controllers
             ViewBag.cart = 1;
             var username = Session["UserName"].ToString();
             var shop = db.ShoppingCart.Where(s => s.UserName == username).ToList();
-            
-            if (shop.Count==0)
+
+            if (shop.Count == 0)
                 ViewBag.cart = 0;
             return View(db.ShoppingCart.Where(s => s.UserName == username).ToList());
         }
 
         [CostumAuthorize(Roles = "user")]
-        public JsonResult AddtoCart(int ?id)
+        public JsonResult AddtoCart(int? id)
         {
-           
+
             ShoppingCart shop = new ShoppingCart();
             Shishe shishe = new Shishe();
             shishe = db.Shishe.Where(x => x.Id_shishe == id).FirstOrDefault();
@@ -51,12 +52,12 @@ namespace ShisheVere.Controllers
             {
                 shop.Shishe = shishe.Emertim;
                 shop.Id_shishe = shishe.Id_shishe;
-                shop.Id_perdorues= user.Id_perdorues;
+                shop.Id_perdorues = user.Id_perdorues;
                 shop.UserName = Session["UserName"].ToString();
                 shop.Sasia = 1;
                 shop.Price = shishe.Price;
                 Foto f = new Foto();
-                 f = db.Foto.Where(p => p.Id_shishe == id).FirstOrDefault();
+                f = db.Foto.Where(p => p.Id_shishe == id).FirstOrDefault();
                 if (f != null)
                 {
                     shop.foto = f.File;
@@ -66,7 +67,7 @@ namespace ShisheVere.Controllers
                 if (cart != null)
                 {
                     TempData["cart"] = "Ju e keni te perfshire me pare kete produkt ne Shopping Cart!";
-                    return Json(shop, JsonRequestBehavior.AllowGet); 
+                    return Json(shop, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
@@ -124,34 +125,13 @@ namespace ShisheVere.Controllers
             var username = Session["UserName"].ToString();
             var shop = db.ShoppingCart.Where(p => p.UserName == username).ToList();
             foreach (var item in shop)
-            {             
+            {
                 db.ShoppingCart.Remove(item);
                 db.SaveChanges();
             }
             return Json(null, JsonRequestBehavior.AllowGet);
         }
 
-        [CostumAuthorize(Roles = "user")]
-        [HttpPost]
-        public JsonResult Porosi(OrderModel order)
-        {
-            var username = Session["UserName"].ToString();
-            var shop = db.ShoppingCart.Where(p => p.UserName == username).ToList();
-             foreach(var item in shop)
-            { 
-                Orders order1 = new Orders();
-                order1.Adresa = order.Adress;
-                order1.Emri = order.Name;
-                order1.Telefoni = order.Phone;
-                order1.Id_shishe = item.Id_shishe;
-                order1.Sasia = item.Sasia;
-                db.Orders.Add(order1);
-                db.SaveChanges();
-                db.ShoppingCart.Remove(item);
-                db.SaveChanges();
-            }           
-            return Json(null, JsonRequestBehavior.AllowGet);
-        }
 
         [CostumAuthorize(Roles = "user")]
         public ActionResult Delete(int? id)
@@ -192,28 +172,6 @@ namespace ShisheVere.Controllers
             return View(shop);
         }
 
-     /*   [HttpPost]
-        [ValidateAntiForgeryToken]
-        [CostumAuthorize(Roles = "user")]
-        public ActionResult Order(FormCollection form,int id)
-        {
-            ShoppingCart shop = new ShoppingCart();
-            Orders porosi = new Orders();
-            shop = db.ShoppingCart.Where(p => p.id == id).FirstOrDefault();
-                porosi.Shishe = shop.Shishe;
-                porosi.Emri = form["Emri"].ToString();
-                porosi.Mbiemri= form["Mbiemri"].ToString();
-                porosi.Telefoni = form["Telefon"].ToString();
-                porosi.Adresa = form["Adresa"].ToString();
-                porosi.Sasia = shop.Sasia;
-                db.Orders.Add(porosi);
-                db.SaveChanges();
-            db.ShoppingCart.Remove(shop);
-            db.SaveChanges();
-            return RedirectToAction("myshoppingcart");
-        }
-        */
-
         [CostumAuthorize(Roles = "admin")]
         public ActionResult DeleteOrder(int? id)
         {
@@ -229,7 +187,6 @@ namespace ShisheVere.Controllers
             return View(porosi);
         }
 
-
         [CostumAuthorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -241,11 +198,9 @@ namespace ShisheVere.Controllers
             return RedirectToAction("Index");
         }
 
-      
         //punojme me pagesen me paypal
 
         private Payment payment;
-      
 
         //krijojme nje pagese me APIContext
         private Payment CreatePayment(APIContext apiContext, string redirectUrl)
@@ -255,23 +210,24 @@ namespace ShisheVere.Controllers
             var shop1 = db.ShoppingCart.Where(p => p.UserName == username).ToList();
             foreach (var item in shop1)
             {
-                shop.items.Add(new Item() {
+                shop.items.Add(new Item()
+                {
                     name = item.Shishe,
                     currency = "USD",
                     price = (Convert.ToDouble(item.Price)).ToString(),
                     // price = "150",
                     quantity = item.Sasia.ToString(),
                     //description = item.Id_shishe.ToString(),
-                    
+
                     sku = item.Id_shishe.ToString(),
                 });
-            } 
+            }
             var payer = new Payer() { payment_method = "paypal" };
 
             // Bejme konfigurimet RedirectUrls me objektet perkatese
             var redirUrls = new RedirectUrls()
             {
-                cancel_url = redirectUrl+ "&Cancel=true",
+                cancel_url = redirectUrl + "&Cancel=true",
                 return_url = redirectUrl
             };
 
@@ -279,10 +235,10 @@ namespace ShisheVere.Controllers
 
             var details = new Details()
             {
-                tax = "1",
-                shipping = "2",
+                tax = "0",
+                shipping = "0",
                 subtotal = shop1.Sum(x => Convert.ToDouble(x.Sasia * x.Price)).ToString()
-               
+
 
             };
 
@@ -292,83 +248,58 @@ namespace ShisheVere.Controllers
             {
                 currency = "USD",
                 total = (Convert.ToDouble(details.tax) + Convert.ToDouble(details.shipping) + Convert.ToDouble(details.subtotal)).ToString(),
-               // total = "153",
-                details =details
+                details = details
             };
 
             //Krijojme transaksionin
-            var transactionList = new List<Transaction>();
-            transactionList.Add(new Transaction()
+            var transactionList = new List<Transaction>
             {
-                description = "Veprim per testim per shitjen e veres.",
-                invoice_number = Convert.ToString((new Random()).Next(100000)),
-                amount = amount,
-                item_list = shop
-            });
+                new Transaction()
+                {
+                    description = "Veprim per testim per shitjen e veres.",
+                    invoice_number = Convert.ToString((new Random()).Next(100000)),
+                    amount = amount,
+                    item_list = shop
+                }
+            };
 
             this.payment = new Payment()
             {
-                intent ="sale",
-                payer =payer,
+                intent = "sale",
+                payer = payer,
                 transactions = transactionList,
                 redirect_urls = redirUrls
             };
-     
+
             return this.payment.Create(apiContext);
         }
 
-        public decimal getTotalPrice()
+        public decimal GetTotalPrice()
         {
-
+            decimal totalPrice = 0;
             var username = Session["UserName"].ToString();
-
-            string connectionString = @"Data Source=ERJONKUKA\EKSERVER;Initial Catalog=ecommerce_1;Integrated Security=True";
-            SqlConnection con = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("func_totalprice", con);
-            con.Open();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@username", username);
-
-            decimal subtotal = Convert.ToDecimal(cmd.ExecuteScalar());
-            return subtotal+3;
-
+            var shoppingCarts = db.ShoppingCart.Where(p => p.UserName == username).ToList();
+            foreach (var item in shoppingCarts)
+            {
+                var shopSasidb = db.Shishe.Where(x => x.Id_shishe == item.Id_shishe).FirstOrDefault();
+                totalPrice += item.Sasia * item.Price;
+            }
+            return totalPrice;
         }
 
-
-        public int getTotalSasiDB()
+        public (bool,string) CheckInventory()
         {
-            int idshishe=0;
-            int sasidb = 0;
-            int rez = 0;
             var username = Session["UserName"].ToString();
             var shopSasi = db.ShoppingCart.Where(p => p.UserName == username).ToList();
             foreach (var item in shopSasi)
             {
-                int sasi = Convert.ToInt32(item.Sasia);
-                idshishe = Convert.ToInt32(item.Id_shishe);
-                /* var shopSasidb = db.Shishe.Where(x => x.Id_shishe == idshishe).ToList();
-
-                 sasidb = sasidb + shopSasidb.Sum(x => Convert.ToInt32(x.Sasia));*/
-
-                string connectionString = @"Data Source=ERJONKUKA\EKSERVER;Initial Catalog=ecommerce_1;Integrated Security=True";
-                SqlConnection con = new SqlConnection(connectionString);
-                SqlCommand cmd = new SqlCommand("CheckSasia", con);
-                con.Open();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@idshishe", idshishe);
-                sasidb = (int) cmd.ExecuteScalar();
-
-                if (sasi > sasidb)
+                var shopSasidb = db.Shishe.Where(x => x.Id_shishe == item.Id_shishe).FirstOrDefault();
+                if(shopSasidb.Sasia < item.Sasia)
                 {
-                    rez = 1;
+                    return (false, $"Inventory for product {shopSasidb.Emertim} does not fill quantity required {item.Sasia}.");
                 }
-
             }
-
-            
-                    
-            return rez;
-
+            return (true,string.Empty);
         }
 
         //Create  execute payment method
@@ -384,67 +315,95 @@ namespace ShisheVere.Controllers
         }
 
         //Metoda qe do therritet ne klikim te butonit
-        public ActionResult PaymentWithPaypal(string Cancel = null)
+        public ActionResult CheckoutOrder(string Cancel = null)
         {
-            
-
-            if (getTotalSasiDB()== 1)
+            var inventoryCheck = CheckInventory();
+            if (!inventoryCheck.Item1)
             {
-                return View("INVENTARI");
+                ViewBag.Message = inventoryCheck.Item2;
+                return View("Inventory");
             }
-            else
+            //getting context from the paypal bases on client Id and ClientSecret for payment
+            APIContext apiContext = PaypalCofiguration.GetAPIContext();
+            try
+            {
+                string payerId = Request.Params["PayerID"];
+                if (string.IsNullOrEmpty(payerId))
+                {
+                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/ShoppingCart/CheckoutOrder?";
+                    var guid = Convert.ToString((new Random()).Next(100000));
+                    var createdPayment = CreatePayment(apiContext, baseURI + "guid=" + guid);
+
+                    //get links returned from paypal response to create call function
+                    var links = createdPayment.links.GetEnumerator();
+                    string paypalRedirectUrl = string.Empty;
+
+                    while (links.MoveNext())
+                    {
+                        Links link = links.Current;
+                        if (link.rel.ToLower().Trim().Equals("approval_url"))
+                        {
+                            paypalRedirectUrl = link.href;
+                        }
+                    }
+                    Session.Add(guid, createdPayment.id);
+
+                    return Redirect(paypalRedirectUrl);
+                }
+                else
+                {
+                    var guid = Request.Params["guid"];
+                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
+                    if (executedPayment.state.ToLower() != "approved")
+                    {
+                        return View("Failure");
+                    }
+
+                }
+            }
+            catch (Exception ex)
             {
 
-                //getting context from the paypal bases on client Id and ClientSecret for payment
-                APIContext apiContext = PaypalCofiguration.GetAPIContext();
-                try
+                PaypalLogger.Log("Error : " + ex.Message);
+                return View("Failure");
+            }
+
+            //If we get here it means everything is correct
+            ViewBag.Price = GetTotalPrice().ToString();
+            CompleteOrder();
+            return View("Success");
+
+        }
+
+        private void CompleteOrder()
+        {
+            var username = Session["UserName"].ToString();
+            var currentUser = db.Perdorues.Where(x => x.Username == username).FirstOrDefault();
+            var shop = db.ShoppingCart.Where(p => p.UserName == username).ToList();
+            foreach (var item in shop)
+            {
+                Orders order = new Orders
                 {
-                    string payerId = Request.Params["PayerID"];
-                    if (string.IsNullOrEmpty(payerId))
-                    {
-                        string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/ShoppingCart/PaymentWithPayPal?";
-                        var guid = Convert.ToString((new Random()).Next(100000));
-                        var createdPayment = CreatePayment(apiContext, baseURI + "guid=" + guid);
+                    Adresa = currentUser.Adrese,
+                    Emri = currentUser.Emer,
+                    Telefoni = currentUser.Telefon,
+                    Id_shishe = item.Id_shishe,
+                    Sasia = item.Sasia,
+                    Id_perdorues = currentUser.Id_perdorues,
+                    Mbiemri = currentUser.Mbiemer
+                };
+                db.Orders.Add(order);
+                db.SaveChanges();
+                db.ShoppingCart.Remove(item);
+                db.SaveChanges();
 
-                        //get links returned from paypal response to create call function
-                        var links = createdPayment.links.GetEnumerator();
-                        string paypalRedirectUrl = string.Empty;
-
-                        while (links.MoveNext())
-                        {
-                            Links link = links.Current;
-                            if (link.rel.ToLower().Trim().Equals("approval_url"))
-                            {
-                                paypalRedirectUrl = link.href;
-                            }
-                        }
-                        Session.Add(guid, createdPayment.id);
-                        return Redirect(paypalRedirectUrl);
-                    }
-                    else
-                    {
-                        var guid = Request.Params["guid"];
-                        var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
-                        if (executedPayment.state.ToLower() != "approved")
-                        {
-                            return View("Failure");
-                        }
-
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                    PaypalLogger.Log("Error : " + ex.Message);
-                    return View("Failure");
-                }
-
-                ViewBag.Price = getTotalPrice().ToString();
-              //  DeleteShop();
-                return View("Success");
+                //Update quantity for current Item
+                var shishe = db.Shishe.Where(x => x.Id_shishe == item.Id_shishe).FirstOrDefault();
+                shishe.Sasia = shishe.Sasia - item.Sasia;
+                db.SaveChanges();
             }
         }
-        
+
         [HttpPost]
         public async Task<ActionResult> IPN()
         {
@@ -455,10 +414,10 @@ namespace ShisheVere.Controllers
             string customField = Request.Form["custom"];
             string numberofitems = Request.Form["num_cart_items"];
             var isIpnValid = await ValidateIpnAsync(ipn);
-         
+
             if (isIpnValid)
             {
-                   
+
                 for (int i = 1; i <= Convert.ToInt32(numberofitems); i++)
                 {
                     string buyerEmail = Request.Form["payer_email"];
@@ -470,21 +429,21 @@ namespace ShisheVere.Controllers
                     string str2 = ("item_number" + i).ToString();
                     string itemNumber = Request.Form[str2];
                     string currenci = Request.Form["mc_currency"];
-                    string str3  = ("quantity" + i).ToString();
+                    string str3 = ("quantity" + i).ToString();
                     string sasia = Request.Form[str3];
 
-                   
 
-                    string connectionString = @"Data Source=ERJON\ERJONSERVER;Initial Catalog=ecommerce;Integrated Security=True";
-                    SqlConnection con = new SqlConnection(connectionString);
-                    SqlCommand cmd = new SqlCommand("payment", con);
+                    string cs = ConfigurationManager.ConnectionStrings["StoreContext"].ConnectionString;
+
+                    SqlConnection con = new SqlConnection(cs);
+                    SqlCommand cmd = new SqlCommand("PaypalTransaction", con);
                     con.Open();
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@transactionID", transactionID);
-                    cmd.Parameters.AddWithValue("@pagesa", sAmountPaid);
+                    cmd.Parameters.AddWithValue("@payment", sAmountPaid);
                     cmd.Parameters.AddWithValue("@status", paymentStatus);
                     cmd.Parameters.AddWithValue("@shisheId", itemNumber);
-                    cmd.Parameters.AddWithValue("@time", DateTime.Now); 
+                    cmd.Parameters.AddWithValue("@time", DateTime.Now);
                     cmd.Parameters.AddWithValue("@valuta", currenci);
                     cmd.Parameters.AddWithValue("@sasiaPorosi", sasia);
                     cmd.Parameters.AddWithValue("@shishe", itemName);
@@ -494,11 +453,8 @@ namespace ShisheVere.Controllers
 
 
                 }
-
-               
-                //return JavaScript("<script>alert(\"Te dhenat duhet te futen ne db\"+ paymentStatus)</script>");
             }
-           
+
             return new EmptyResult();
         }
 
@@ -506,7 +462,7 @@ namespace ShisheVere.Controllers
         {
             using (var client = new HttpClient())
             {
-                const string PayPalUrl = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+                const string PayPalUrl = "https://ipnpb.sandbox.paypal.com/cgi-bin/webscr";
 
                 // This is necessary in order for PayPal to not resend the IPN.
                 await client.PostAsync(PayPalUrl, new StringContent(string.Empty));
@@ -517,6 +473,5 @@ namespace ShisheVere.Controllers
                 return (responseString == "VERIFIED");
             }
         }
-
     }
 }

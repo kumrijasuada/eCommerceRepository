@@ -1,6 +1,4 @@
-﻿
-
-@{
+﻿@{
     ViewBag.Title = "INVENTARI";
     Layout = null;
 }
@@ -108,7 +106,7 @@
     <!-- Cart -->
     <section class="cart bgwhite p-t-70 p-b-100">
         <div class="container" id="con1">
-            <h2 style="color:red"> SASIA E KERKUAR ESHTE ME E MADHE SE SASIA NE STOK.</h2>
+            <h2 style="color:red">@ViewBag.Message</h2>
             <a href="@Url.Action("myshoppingcart", "ShoppingCart")">
                 <br /><br />
                 <h5>Go To Shopping Cart !</h5>
